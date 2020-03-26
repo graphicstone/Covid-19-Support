@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_help"
-        android:name="com.nullbyte.covid_19support.ui.help.HelpFragment"
+        android:name="com.nullbyte.covid_19support.ui.help.SearchFragment"
         android:label="@string/help"
-        tools:layout="@layout/fragment_help" />
+        tools:layout="@layout/fragment_search" />
 </navigation>

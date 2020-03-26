@@ -41,4 +41,8 @@
     <string name="total_deaths">Total Deaths</string>
     <string name="total_recovered">Total Recovered</string>
     <string name="all_countries">All Countries</string>
+    <string name="search_by_country">Search by country</string>
+    <string name="country_name">Country Name</string>
+    <string name="count">Count</string>
+    <string name="loading">Loading…</string>
 </resources>

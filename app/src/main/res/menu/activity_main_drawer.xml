@@ -18,7 +18,7 @@
             android:title="@string/tracker" />
         <item
             android:id="@+id/nav_help"
-            android:icon="@drawable/ic_help_black_24dp"
+            android:icon="@drawable/ic_location_searching_black_24dp"
             android:title="@string/help" />
     </group>
 </menu>
