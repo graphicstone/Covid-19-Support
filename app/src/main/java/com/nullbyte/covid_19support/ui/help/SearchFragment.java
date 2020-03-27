@@ -53,9 +53,21 @@ public class SearchFragment extends Fragment implements TextWatcher {
         return mSearchBinding.getRoot();
     }
 
+    private void init() {
+        mCountriesList = new ArrayList<>();
+        mCasesList = new ArrayList<>();
+        mTempCountriesList = new ArrayList<>();
+        mTempCasesList = new ArrayList<>();
+    }
+
     private void getCountriesList() {
         CasesByCountryAPI casesByCountryAPI = new CasesByCountryAPI(data -> {
-            data = data.substring(18, data.length() - 1);
+            int splitPoint = 0;
+            for(int i=0; i<data.length(); i++) {
+                if(data.charAt(i) == '[')
+                    splitPoint = i;
+            }
+            data = data.substring(splitPoint, data.length() - 1);
             try {
                 JSONArray jsonArr = new JSONArray(data);
                 for (int i = 0; i < data.length(); ++i) {
@@ -72,29 +84,6 @@ public class SearchFragment extends Fragment implements TextWatcher {
             mSearchBinding.rvCountriesList.setAdapter(new CountryListAdapter(mCountriesList, mCasesList));
         });
         casesByCountryAPI.execute();
-    }
-
-    private void getSearchedCountryData(String searchedCountry) {
-        SearchByCountryAPI searchByCountryAPI = new SearchByCountryAPI(searchedCountry, data -> {
-            try {
-                JSONObject dataObject = new JSONObject(data);
-                mCountriesList.clear();
-                mCasesList.clear();
-                mCountriesList.add(dataObject.getString("country"));
-                mCasesList.add(dataObject.getString("total_cases"));
-                Objects.requireNonNull(mSearchBinding.rvCountriesList.getAdapter()).notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        });
-        searchByCountryAPI.execute();
-    }
-
-    private void init() {
-        mCountriesList = new ArrayList<>();
-        mCasesList = new ArrayList<>();
-        mTempCountriesList = new ArrayList<>();
-        mTempCasesList = new ArrayList<>();
     }
 
     @Override
@@ -118,7 +107,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
             Objects.requireNonNull(mSearchBinding.rvCountriesList.getAdapter()).notifyDataSetChanged();
         } else {
             for (int i = 0; i < mTempCountriesList.size(); i++) {
-                if (mTempCountriesList.get(i).toLowerCase().contains(inputString.toString())) {
+                if (mTempCountriesList.get(i).toLowerCase().contains(inputString.toString().toLowerCase())) {
                     mCountriesList.add(mTempCountriesList.get(i));
                     mCasesList.add(mTempCasesList.get(i));
                     Objects.requireNonNull(mSearchBinding.rvCountriesList.getAdapter()).notifyDataSetChanged();

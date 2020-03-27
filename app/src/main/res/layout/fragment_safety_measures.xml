@@ -12,96 +12,132 @@
             type="com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.safety_measures.SafetyMeasuresFragment">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_16"
-            android:background="@drawable/light_boundary"
-            android:orientation="vertical"
-            android:padding="@dimen/dp_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/ll_prevention"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prevention"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
                 android:layout_marginTop="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_1"
-                android:textSize="@dimen/sp_16" />
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/light_boundary"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/prevention"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/sp_20"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_1"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_2"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_3"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_4"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_5"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_6"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:drawableStart="@drawable/ic_grey_dot"
+                    android:drawablePadding="@dimen/dp_8"
+                    android:text="@string/prevention_7"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_myth_busters_heading"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_2"
-                android:textSize="@dimen/sp_16" />
+                android:layout_margin="@dimen/dp_16"
+                android:text="@string/myth_busters"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_prevention" />
 
-            <TextView
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_3"
-                android:textSize="@dimen/sp_16" />
+                android:layout_height="@dimen/dp_180"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_16"
+                app:fillColor="@color/accent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_myth_busters_heading"
+                app:pageColor="@color/icons"
+                app:radius="6dp"
+                app:slideInterval="10000"
+                app:strokeColor="@color/accent"
+                app:strokeWidth="1dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_4"
-                android:textSize="@dimen/sp_16" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_5"
-                android:textSize="@dimen/sp_16" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_6"
-                android:textSize="@dimen/sp_16" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_8"
-                android:drawableStart="@drawable/ic_grey_dot"
-                android:drawablePadding="@dimen/dp_8"
-                android:text="@string/prevention_7"
-                android:textSize="@dimen/sp_16" />
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>

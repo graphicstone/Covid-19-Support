@@ -8,4 +8,13 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="black">#121212</color>
+    <color name="white">#FAFAFA</color>
+    <color name="blue">#2196f3</color>
+    <color name="red">#FF3E34</color>
+    <color name="green">#1AA260</color>
+    <color name="dark_grey">#616161</color>
+    <color name="pink">#FF0052</color>
+    <color name="orange">#FF5722</color>
+    <color name="purple">#9c27b0</color>
 </resources>

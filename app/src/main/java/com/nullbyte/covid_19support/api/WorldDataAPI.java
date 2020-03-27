@@ -1,6 +1,7 @@
 package com.nullbyte.covid_19support.api;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nullbyte.covid_19support.callback.APICallback;
 

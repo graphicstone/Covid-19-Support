@@ -1,5 +1,7 @@
 package com.nullbyte.covid_19support.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nullbyte.covid_19support.R;
+import com.nullbyte.covid_19support.ui.CountryStatActivity;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
     private ArrayList<String> countriesList;
     private ArrayList<String> casesList;
+    private Context mContext;
 
     public CountryListAdapter(ArrayList<String> countriesList, ArrayList<String> casesList) {
         this.countriesList = countriesList;
@@ -25,6 +29,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_country_list, parent, false));
     }
 
@@ -32,6 +37,12 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.countryName.setText(countriesList.get(position));
         holder.casesCount.setText(casesList.get(position));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext.getApplicationContext(), CountryStatActivity.class);
+            intent.putExtra("Country", countriesList.get(position));
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

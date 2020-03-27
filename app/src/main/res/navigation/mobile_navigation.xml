@@ -8,24 +8,24 @@
     <fragment
         android:id="@+id/nav_info"
         android:name="com.nullbyte.covid_19support.ui.info.InfoFragment"
-        android:label="@string/menu_home"
+        android:label="@string/info"
         tools:layout="@layout/fragment_info" />
 
     <fragment
         android:id="@+id/nav_safety_measures"
         android:name="com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/safety_measures"
         tools:layout="@layout/fragment_safety_measures" />
 
     <fragment
         android:id="@+id/nav_tracker"
         android:name="com.nullbyte.covid_19support.ui.tracker.TrackerFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/tracker"
         tools:layout="@layout/fragment_tracker" />
 
     <fragment
         android:id="@+id/nav_help"
         android:name="com.nullbyte.covid_19support.ui.help.SearchFragment"
-        android:label="@string/help"
+        android:label="@string/search"
         tools:layout="@layout/fragment_search" />
 </navigation>

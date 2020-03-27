@@ -36,13 +36,22 @@
     <string name="prevention_5">Stay home if you feel unwell.</string>
     <string name="prevention_6">Refrain from smoking and other activities that weaken the lungs.</string>
     <string name="prevention_7">Practice physical distancing by avoiding unnecessary travel and staying away from large groups of people.</string>
-    <string name="total_cases">Total Cases</string>
     <string name="_0">0</string>
-    <string name="total_deaths">Total Deaths</string>
-    <string name="total_recovered">Total Recovered</string>
     <string name="all_countries">All Countries</string>
     <string name="search_by_country">Search by country</string>
-    <string name="country_name">Country Name</string>
     <string name="count">Count</string>
     <string name="loading">Loading…</string>
+    <string name="search">Search</string>
+    <string name="country_name">Country Name</string>
+    <string name="total_cases">Total Cases</string>
+    <string name="total_deceased">Total Deceased</string>
+    <string name="new_deceased">Newly Deceased</string>
+    <string name="new_cases">New Cases</string>
+    <string name="total_recovered">Total Recovered</string>
+    <string name="country_stat">Country Stat</string>
+    <string name="total_active">Total Active</string>
+    <string name="cases_per_1m">Cases per million</string>
+    <string name="last_updated_on">Last updated on:</string>
+    <string name="latest_update">Latest update</string>
+    <string name="myth_busters">Myth busters</string>
 </resources>
