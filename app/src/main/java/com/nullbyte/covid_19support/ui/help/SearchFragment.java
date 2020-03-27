@@ -9,16 +9,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.adapter.CountryListAdapter;
 import com.nullbyte.covid_19support.api.CasesByCountryAPI;
-import com.nullbyte.covid_19support.api.SearchByCountryAPI;
-import com.nullbyte.covid_19support.callback.APICallback;
 import com.nullbyte.covid_19support.databinding.FragmentSearchBinding;
 
 import org.json.JSONArray;
@@ -46,8 +46,9 @@ public class SearchFragment extends Fragment implements TextWatcher {
         mSearchBinding.setHelpViewModel(mSearchViewModel);
 
         init();
-        getCountriesList();
 
+        mSearchBinding.refreshCountryListLayout.setOnRefreshListener(() -> getCountriesList(mSearchBinding.getRoot()));
+        getCountriesList(mSearchBinding.getRoot());
         mSearchBinding.etSearchBar.addTextChangedListener(this);
 
         return mSearchBinding.getRoot();
@@ -60,23 +61,31 @@ public class SearchFragment extends Fragment implements TextWatcher {
         mTempCasesList = new ArrayList<>();
     }
 
-    private void getCountriesList() {
+    private void getCountriesList(View view) {
         CasesByCountryAPI casesByCountryAPI = new CasesByCountryAPI(data -> {
-            int splitPoint = 0;
-            for(int i=0; i<data.length(); i++) {
-                if(data.charAt(i) == '[')
-                    splitPoint = i;
-            }
-            data = data.substring(splitPoint, data.length() - 1);
-            try {
-                JSONArray jsonArr = new JSONArray(data);
-                for (int i = 0; i < data.length(); ++i) {
-                    JSONObject object = jsonArr.getJSONObject(i);
-                    mCountriesList.add(object.getString("country_name"));
-                    mCasesList.add(object.getString("cases"));
+            if (data == null) {
+                Snackbar snackbar = Snackbar.make(view, "Please check your network connection", Snackbar.LENGTH_LONG);
+                snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
+                snackbar.show();
+                mSearchBinding.refreshCountryListLayout.setRefreshing(false);
+            } else {
+                int splitPoint = 0;
+                for (int i = 0; i < data.length(); i++) {
+                    if (data.charAt(i) == '[')
+                        splitPoint = i;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                data = data.substring(splitPoint, data.length() - 1);
+                try {
+                    JSONArray jsonArr = new JSONArray(data);
+                    for (int i = 0; i < data.length(); ++i) {
+                        JSONObject object = jsonArr.getJSONObject(i);
+                        mCountriesList.add(object.getString("country_name"));
+                        mCasesList.add(object.getString("cases"));
+                        mSearchBinding.refreshCountryListLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             mTempCountriesList.addAll(mCountriesList);
             mTempCasesList.addAll(mCasesList);

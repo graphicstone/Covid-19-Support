@@ -3,7 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_info">
+    app:startDestination="@+id/nav_tracker">
+
+    <fragment
+        android:id="@+id/nav_tracker"
+        android:name="com.nullbyte.covid_19support.ui.tracker.TrackerFragment"
+        android:label="@string/tracker"
+        tools:layout="@layout/fragment_tracker" />
+
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.nullbyte.covid_19support.ui.help.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/nav_info"
@@ -17,15 +29,4 @@
         android:label="@string/safety_measures"
         tools:layout="@layout/fragment_safety_measures" />
 
-    <fragment
-        android:id="@+id/nav_tracker"
-        android:name="com.nullbyte.covid_19support.ui.tracker.TrackerFragment"
-        android:label="@string/tracker"
-        tools:layout="@layout/fragment_tracker" />
-
-    <fragment
-        android:id="@+id/nav_help"
-        android:name="com.nullbyte.covid_19support.ui.help.SearchFragment"
-        android:label="@string/search"
-        tools:layout="@layout/fragment_search" />
 </navigation>

@@ -5,14 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_info"
-            android:icon="@drawable/ic_info_black_24dp"
-            android:title="@string/info" />
-        <item
-            android:id="@+id/nav_safety_measures"
-            android:icon="@drawable/ic_flag_black_24dp"
-            android:title="@string/safety_measures" />
-        <item
             android:id="@+id/nav_tracker"
             android:icon="@drawable/ic_tracker_black_24dp"
             android:title="@string/tracker" />
@@ -20,5 +12,13 @@
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_location_searching_black_24dp"
             android:title="@string/search" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/info" />
+        <item
+            android:id="@+id/nav_safety_measures"
+            android:icon="@drawable/ic_flag_black_24dp"
+            android:title="@string/safety_measures" />
     </group>
 </menu>

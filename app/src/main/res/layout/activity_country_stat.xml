@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.CountryStatActivity">
 
     <Toolbar
@@ -16,269 +17,283 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/ll_header"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/country_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_8"
-        app:cardCornerRadius="@dimen/dp_8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_country_stat" >
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/light_boundary"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_country_name"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/ll_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primary"
-                android:padding="@dimen/dp_8"
-                android:text="@string/country_name"
-                android:textAlignment="center"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/sp_24"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_total_cases_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginTop="@dimen/dp_8"
-                android:text="@string/loading"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/sp_32"
-                android:textStyle="bold" />
+                android:layout_marginEnd="@dimen/dp_16"
+                app:cardCornerRadius="@dimen/dp_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tv_total_cases_heading"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/light_boundary"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_country_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/primary"
+                        android:padding="@dimen/dp_8"
+                        android:text="@string/country_name"
+                        android:textAlignment="center"
+                        android:textColor="@color/icons"
+                        android:textSize="@dimen/sp_24"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_total_cases_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@string/loading"
+                        android:textColor="@color/primary_text"
+                        android:textSize="@dimen/sp_32"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_total_cases_heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp_16"
+                        android:text="@string/total_cases"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/sp_20"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:id="@+id/ll_active"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp_16"
-                android:text="@string/total_cases"
-                android:textAlignment="center"
-                android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toStartOf="@id/ll_total_recovered"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_header">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_active_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/tv_active_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_active"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_active"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toStartOf="@id/ll_total_recovered"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_active_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/ll_total_deceased"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toStartOf="@id/ll_new_deceased"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_active">
 
-        <TextView
-            android:id="@+id/tv_active_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_active"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_total_deceased_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_total_deceased_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_deceased"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_total_deceased"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_24"
-        android:gravity="center"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ll_new_deceased"
-        app:layout_constraintTop_toBottomOf="@id/ll_active">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_total_deceased_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/red"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/ll_new_cases"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toStartOf="@id/ll_cases_per_million"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_total_deceased">
 
-        <TextView
-            android:id="@+id/tv_total_deceased_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_deceased"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_new_cases_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_new_cases_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_cases"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_new_cases"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_8"
-        android:gravity="center"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ll_cases_per_million"
-        app:layout_constraintTop_toBottomOf="@id/ll_total_deceased">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_new_cases_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/purple"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/ll_total_recovered"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ll_active"
+                app:layout_constraintTop_toBottomOf="@id/ll_header">
 
-        <TextView
-            android:id="@+id/tv_new_cases_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_cases"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_total_recovered_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_total_recovered_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_recovered"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_total_recovered"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        app:layout_constraintStart_toEndOf="@id/ll_active"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_header">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_total_recovered_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/green"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/ll_new_deceased"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ll_total_deceased"
+                app:layout_constraintTop_toBottomOf="@id/ll_total_recovered">
 
-        <TextView
-            android:id="@+id/tv_total_recovered_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/total_recovered"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_new_deceased_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_new_deceased_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_deceased"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_new_deceased"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ll_total_deceased"
-        app:layout_constraintTop_toBottomOf="@id/ll_total_recovered">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_new_deceased_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/orange"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/ll_cases_per_million"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@drawable/light_boundary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ll_new_cases"
+                app:layout_constraintTop_toBottomOf="@id/ll_new_deceased">
 
-        <TextView
-            android:id="@+id/tv_new_deceased_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_deceased"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv_cases_per_million_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:textColor="@color/pink"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_cases_per_million_heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cases_per_1m"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/ll_cases_per_million"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_8"
-        android:gravity="center"
-        android:background="@drawable/light_boundary"
-        android:padding="@dimen/dp_16"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ll_new_cases"
-        app:layout_constraintTop_toBottomOf="@id/ll_new_deceased">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_cases_per_million_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/loading"
-            android:textColor="@color/pink"
-            android:textSize="@dimen/sp_24"
-            android:textStyle="bold" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_cases_per_million_heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cases_per_1m"
-            android:textAlignment="center"
-            android:textSize="@dimen/sp_16"
-            android:textStyle="bold" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
