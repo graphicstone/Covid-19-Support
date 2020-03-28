@@ -3,12 +3,10 @@ package com.nullbyte.covid_19support.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.ui.help.SearchFragment;
 import com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresFragment;
@@ -26,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
 
         fm.beginTransaction().add(R.id.main_container, infoFragment, "3").hide(infoFragment).commit();
         fm.beginTransaction().add(R.id.main_container, countryFragment, "2").hide(countryFragment).commit();
