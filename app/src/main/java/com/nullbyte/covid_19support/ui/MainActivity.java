@@ -1,25 +1,26 @@
 package com.nullbyte.covid_19support.ui;
 
 import android.os.Bundle;
-import android.view.Menu;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.R;
+import com.nullbyte.covid_19support.ui.help.SearchFragment;
+import com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresFragment;
+import com.nullbyte.covid_19support.ui.tracker.TrackerFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    private Fragment trackerFragment = new TrackerFragment();
+    final Fragment countryFragment = new SearchFragment();
+    final Fragment infoFragment = new SafetyMeasuresFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = trackerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +29,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.app_name, R.string.app_name);
-        mDrawerToggle.setHomeAsUpIndicator(getDrawable(R.drawable.ic_menu_black_24dp));
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_tracker, R.id.nav_help, R.id.nav_info, R.id.nav_safety_measures)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+        fm.beginTransaction().add(R.id.main_container, infoFragment, "3").hide(infoFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, countryFragment, "2").hide(countryFragment).commit();
+        fm.beginTransaction().add(R.id.main_container, trackerFragment, "1").commit();
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    fm.beginTransaction().hide(active).show(trackerFragment).commit();
+                    active = trackerFragment;
+                    break;
+                case R.id.country:
+                    fm.beginTransaction().hide(active).show(countryFragment).commit();
+                    active = countryFragment;
+                    break;
+                case R.id.charts:
+                    fm.beginTransaction().hide(active).show(infoFragment).commit();
+                    active = infoFragment;
+                    break;
+            }
+            return true;
+        });
     }
 }

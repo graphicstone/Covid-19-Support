@@ -69,6 +69,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
                 snackbar.show();
                 mSearchBinding.refreshCountryListLayout.setRefreshing(false);
             } else {
+                mCountriesList.clear();
+                mCasesList.clear();
                 int splitPoint = 0;
                 for (int i = 0; i < data.length(); i++) {
                     if (data.charAt(i) == '[')
