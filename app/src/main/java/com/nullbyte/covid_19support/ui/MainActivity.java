@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     final Fragment infoFragment = new SafetyMeasuresFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = trackerFragment;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction().add(R.id.main_container, countryFragment, "2").hide(countryFragment).commit();
         fm.beginTransaction().add(R.id.main_container, trackerFragment, "1").commit();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
@@ -47,5 +48,16 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(active != trackerFragment) {
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            fm.beginTransaction().hide(active).show(trackerFragment).commit();
+            active = trackerFragment;
+        } else {
+            super.onBackPressed();
+        }
     }
 }
