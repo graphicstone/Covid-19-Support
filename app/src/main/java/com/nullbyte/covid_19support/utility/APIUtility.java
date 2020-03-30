@@ -1,8 +1,14 @@
 package com.nullbyte.covid_19support.utility;
 
+import android.util.Log;
+
 import com.nullbyte.covid_19support.constants.Constant;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
@@ -30,6 +36,32 @@ public class APIUtility {
         return responseString;
     }
 
+    public static String fetchLatestUpdates() {
+        String responseString = "";
+        try {
+            URL url = new URL("https://newsapi.org/v2/top-headlines?q=corona&apiKey=afd755aef710424099dc62e554e64410");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP Error code : "
+                        + conn.getResponseCode());
+            }
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            Log.i("br", String.valueOf(br));
+            String output;
+            while ((output = br.readLine()) != null) {
+                responseString = output;
+                Log.i("Data", output);
+            }
+            conn.disconnect();
 
+        } catch (Exception e) {
+            Log.i("Data", "hdfg");
+            e.printStackTrace();
+        }
+        return responseString;
+    }
 
 }

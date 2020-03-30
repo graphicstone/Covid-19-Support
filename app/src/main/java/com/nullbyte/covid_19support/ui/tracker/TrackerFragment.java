@@ -1,6 +1,7 @@
 package com.nullbyte.covid_19support.ui.tracker;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.R;
+import com.nullbyte.covid_19support.api.GlobalDateWiseAPI;
 import com.nullbyte.covid_19support.api.WorldDataAPI;
 import com.nullbyte.covid_19support.databinding.FragmentTrackerBinding;
 
@@ -28,12 +30,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class TrackerFragment extends Fragment {
 
     private TrackerViewModel mTrackerViewModel;
     private FragmentTrackerBinding mTrackerBinding;
+    private ArrayList<String> mDateList;
+    private ArrayList<String> mCasesList;
+    private ArrayList<String> mDeceasedList;
+    private ArrayList<String> mRecoveredList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,12 +52,61 @@ public class TrackerFragment extends Fragment {
 
         });
 
+        init();
         mTrackerBinding.refreshWorldDataLayout.setOnRefreshListener(() -> getWorldData(mTrackerBinding.getRoot()));
 
+        getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());
         drawGraph();
 
         return mTrackerBinding.getRoot();
+    }
+
+    private void init() {
+        mDateList = new ArrayList<>();
+        mCasesList = new ArrayList<>();
+        mDeceasedList = new ArrayList<>();
+        mRecoveredList = new ArrayList<>();
+    }
+
+    private void getDateWiseData(View view) {
+        GlobalDateWiseAPI globalDateWiseAPI = new GlobalDateWiseAPI(data -> {
+            if (data == null) {
+                Snackbar snackbar = Snackbar.make(view, "Please check your network connection", Snackbar.LENGTH_LONG);
+                snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
+                snackbar.show();
+                mTrackerBinding.refreshWorldDataLayout.setRefreshing(false);
+            } else {
+                int splitPoint = 0;
+                for (int i = 1; i < data.length(); i++) {
+                    if (data.charAt(i) == '{') {
+                        splitPoint = i;
+                        break;
+                    }
+                }
+                data = data.substring(splitPoint, data.length() - 1);
+                try {
+                    JSONObject response = new JSONObject(data);
+                    Iterator<String> keys = response.keys();
+                    while (keys.hasNext()) {
+                        String key = keys.next();
+                        mDateList.add(key);
+                        JSONObject value = response.getJSONObject(key);
+                        mCasesList.add(value.getString("confirmed"));
+                        mRecoveredList.add(value.getString("recovered"));
+                        mDeceasedList.add(value.getString("deaths"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            Log.i("Dates", mDateList.toString());
+            Log.i("Cases", mCasesList.toString());
+            Log.i("Deceased", mDeceasedList.toString());
+            Log.i("Recovered", mRecoveredList.toString());
+        });
+        globalDateWiseAPI.execute();
     }
 
     private void getWorldData(View view) {
@@ -85,7 +141,7 @@ public class TrackerFragment extends Fragment {
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        final String[] months = new String[]{"Jan", "Feb", "Mar", "Apr","Jan1", "Feb1", "Mar1", "Apr1","Jan1", "Feb1", "Mar1", "Apr1","Jan1", "Feb1", "Mar1", "Apr1"};
+        final String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "Jan1", "Feb1", "Mar1", "Apr1", "Jan1", "Feb1", "Mar1", "Apr1", "Jan1", "Feb1", "Mar1", "Apr1"};
 
 
         ValueFormatter formatter = new ValueFormatter() {
@@ -109,7 +165,8 @@ public class TrackerFragment extends Fragment {
         lineChart.invalidate();
 
     }
-    private ArrayList<Entry> getData(){
+
+    private ArrayList<Entry> getData() {
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(0f, 60f));
         entries.add(new Entry(1f, 10f));

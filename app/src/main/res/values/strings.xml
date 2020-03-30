@@ -44,4 +44,6 @@
     <string name="latest_update">Latest update</string>
     <string name="myth_busters">Myth busters</string>
     <string name="home">Home</string>
+    <string name="updates">Updates</string>
+    <string name="powered_by_news_api">Powered by News API</string>
 </resources>

@@ -9,13 +9,13 @@
 
         <variable
             name="helpViewModel"
-            type="com.nullbyte.covid_19support.ui.help.SearchViewModel" />
+            type="com.nullbyte.covid_19support.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.help.SearchFragment">
+        tools:context=".ui.search.SearchFragment">
 
         <EditText
             android:id="@+id/et_search_bar"

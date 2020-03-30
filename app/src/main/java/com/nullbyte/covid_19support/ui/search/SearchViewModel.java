@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui.help;
+package com.nullbyte.covid_19support.ui.search;
 
 import androidx.lifecycle.ViewModel;
 

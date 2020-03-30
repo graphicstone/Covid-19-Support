@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui.help;
+package com.nullbyte.covid_19support.ui.search;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -73,8 +73,10 @@ public class SearchFragment extends Fragment implements TextWatcher {
                 mCasesList.clear();
                 int splitPoint = 0;
                 for (int i = 0; i < data.length(); i++) {
-                    if (data.charAt(i) == '[')
+                    if (data.charAt(i) == '[') {
                         splitPoint = i;
+                        break;
+                    }
                 }
                 data = data.substring(splitPoint, data.length() - 1);
                 try {

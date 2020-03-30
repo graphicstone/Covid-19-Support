@@ -20,4 +20,10 @@
         android:icon="@drawable/ic_insert_chart_white_24dp"
         android:title="@string/info"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/updates"
+        android:enabled="true"
+        android:icon="@drawable/ic_trending_up_black_24dp"
+        android:title="@string/updates"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.databinding.FragmentSafetyMeasuresBinding;
-import com.synnapps.carouselview.ViewListener;
 
 public class SafetyMeasuresFragment extends Fragment {
 
