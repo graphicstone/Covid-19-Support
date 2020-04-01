@@ -32,6 +32,7 @@ public class CountryStatActivity extends AppCompatActivity {
 
         initViews();
 
+
         String countryName = getIntent().getStringExtra("Country");
         mCountryName.setText(countryName);
 
