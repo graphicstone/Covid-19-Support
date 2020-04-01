@@ -151,7 +151,7 @@ public class TrackerFragment extends Fragment {
 
     public void drawGraphs() {
         Log.i("anant","pie");
-       // drawPie();
+        drawPie();
         drawGraphforTotalCases();
         drawGraphForDeath();
         drawGraphForRecovered();
@@ -160,12 +160,13 @@ public class TrackerFragment extends Fragment {
     private void drawPie()
     {
 
-
+        mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size()-1));
+        mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size()-1));
         PieChart mPieChart = mTrackerBinding.piechartoverall;
         ArrayList<PieEntry> sessDataPie1 = new ArrayList<>();
         Log.i("anant",mDeceased +" "+mRecovered);
-        sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
         sessDataPie1.add(new PieEntry(mRecovered, "Recovered"));
+        sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
         GraphUtility.piechart(mPieChart, sessDataPie1);
         mPieChart.setVisibility(View.VISIBLE);
 

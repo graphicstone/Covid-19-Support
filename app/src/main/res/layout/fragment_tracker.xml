@@ -245,23 +245,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:id="@+id/pieChartOverall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cv_new_deceased"
-                    >
 
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/piechartoverall"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/chart1"
@@ -271,7 +255,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pieChartOverall">
+                    app:layout_constraintTop_toBottomOf="@id/cv_new_deceased">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -292,6 +276,33 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/pieChartOverall"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chart1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:text="@string/recovered_vs_deceased"
+                        android:textStyle="bold"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/sp_16" />
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/piechartoverall"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/chart2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -299,7 +310,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart1">
+                    app:layout_constraintTop_toBottomOf="@id/pieChartOverall">
 
                     <TextView
                         android:layout_width="match_parent"

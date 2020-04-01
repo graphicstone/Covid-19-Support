@@ -30,7 +30,8 @@ public class GraphUtility {
         PieDataSet pieDataSet = new PieDataSet(arrayList, " ");
         pieDataSet.setSliceSpace(3f);
         pieDataSet.setSelectionShift(5f);
-        int[] colors = {Color.rgb(13, 166, 10), Color.rgb(255, 140, 0)};
+        int[] colors = {Color.rgb(14, 161, 41), Color.rgb(209, 41, 19)};
+
         ArrayList<Integer> arrayList1 = new ArrayList<>();
         for (int c : colors) {
             arrayList1.add(c);
