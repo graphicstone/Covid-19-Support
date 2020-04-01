@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -23,6 +25,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.snackbar.Snackbar;
+import com.nullbyte.covid_19support.LoaderDialog;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.GlobalDateWiseAPI;
 import com.nullbyte.covid_19support.api.WorldDataAPI;
@@ -45,6 +48,7 @@ public class TrackerFragment extends Fragment {
     private ArrayList<String> mDeceasedListTotal;
     private ArrayList<String> mRecoveredListTotal;
     private Long mDeceased,mRecovered;
+    DialogFragment dialogFragment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,8 +65,16 @@ public class TrackerFragment extends Fragment {
 
         getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());
-        Log.i("anant","pie");
-        // drawGraph();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+        dialogFragment = new LoaderDialog();
+        dialogFragment.show(ft, "dialog");
+
 
         return mTrackerBinding.getRoot();
     }
@@ -72,6 +84,7 @@ public class TrackerFragment extends Fragment {
         mCasesListTotal = new ArrayList<>();
         mDeceasedListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
+
     }
 
 
@@ -111,7 +124,7 @@ public class TrackerFragment extends Fragment {
             Log.i("Cases", mCasesListTotal.toString());
             Log.i("Deceased", mDeceasedListTotal.toString());
             Log.i("Recovered", mRecoveredListTotal.toString());
-            Log.i("anant","hi");
+
         });
         globalDateWiseAPI.execute();
     }
@@ -136,7 +149,7 @@ public class TrackerFragment extends Fragment {
                     //mDeceased = Long.valueOf(dataObject.getString("total_deaths"));
                     //mRecovered = Long.valueOf(dataObject.getString("total_recovered"));;
 
-
+                    dialogFragment.dismiss();
 
                     drawGraphs();
                 } catch (JSONException e) {
