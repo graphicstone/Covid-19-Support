@@ -15,9 +15,11 @@ public class CasesByCountryDateAPI extends AsyncTask<Void, Void, String> {
 
     private APICallback apiCallback;
     private String responseString;
+    private String mCountyName;
 
-    public CasesByCountryDateAPI(APICallback apiCallback) {
+    public CasesByCountryDateAPI(APICallback apiCallback, String mCountyName) {
         this.apiCallback = apiCallback;
+        this.mCountyName = mCountyName;
     }
 
     @Override
