@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nullbyte.covid_19support.R;
-import com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresFragment;
+import com.nullbyte.covid_19support.ui.info.InfoFragment;
 import com.nullbyte.covid_19support.ui.search.SearchFragment;
 import com.nullbyte.covid_19support.ui.tracker.TrackerFragment;
 import com.nullbyte.covid_19support.ui.updates.UpdatesFragment;
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment trackerFragment = new TrackerFragment();
     final Fragment countryFragment = new SearchFragment();
-    final Fragment infoFragment = new SafetyMeasuresFragment();
+    final Fragment infoFragment = new InfoFragment();
     final Fragment updatesFragment = new UpdatesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = trackerFragment;

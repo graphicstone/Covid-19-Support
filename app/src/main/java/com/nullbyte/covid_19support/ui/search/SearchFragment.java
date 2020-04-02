@@ -91,6 +91,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
                     e.printStackTrace();
                 }
             }
+            mTempCasesList.clear();
+            mTempCountriesList.clear();
             mTempCountriesList.addAll(mCountriesList);
             mTempCasesList.addAll(mCasesList);
             mSearchBinding.rvCountriesList.setLayoutManager(new LinearLayoutManager(getActivity()));

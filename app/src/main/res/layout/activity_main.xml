@@ -9,10 +9,10 @@
         android:id="@+id/tv_title_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/divider"
+        android:background="@color/accent"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_20" />
 
     <FrameLayout

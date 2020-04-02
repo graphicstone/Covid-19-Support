@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nullbyte.covid_19support.R;
-import com.nullbyte.covid_19support.ui.CountryStatActivity;
 
 import java.util.ArrayList;
 

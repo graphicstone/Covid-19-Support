@@ -9,14 +9,14 @@
 
         <variable
             name="safetyMeasuresViewModel"
-            type="com.nullbyte.covid_19support.ui.safety_measures.SafetyMeasuresViewModel" />
+            type="com.nullbyte.covid_19support.ui.info.InfoViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        tools:context=".ui.safety_measures.SafetyMeasuresFragment">
+        tools:context=".ui.info.InfoFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
