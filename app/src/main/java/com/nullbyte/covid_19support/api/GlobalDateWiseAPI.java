@@ -26,6 +26,7 @@ public class GlobalDateWiseAPI extends AsyncTask<Void, Void, String> {
                 .build();
         Request request = new Request.Builder()
                 .url("https://covidapi.info/api/v1/global/count")
+               //DONE
                 .method("GET", null)
                 .build();
         try {
