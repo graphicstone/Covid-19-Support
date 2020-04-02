@@ -2,16 +2,9 @@ package com.nullbyte.covid_19support.api;
 
 import android.os.AsyncTask;
 
-import com.nullbyte.covid_19support.callback.APICallback;
+import com.nullbyte.covid_19support.callbacks.APICallback;
 import com.nullbyte.covid_19support.constants.Constant;
-import com.nullbyte.covid_19support.utility.APIUtility;
-
-import java.io.IOException;
-import java.util.Objects;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.nullbyte.covid_19support.utilities.APIUtility;
 
 public class CasesByCountryAPI extends AsyncTask<Void, Void, String> {
 

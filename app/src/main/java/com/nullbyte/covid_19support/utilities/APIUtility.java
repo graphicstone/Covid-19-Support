@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.utility;
+package com.nullbyte.covid_19support.utilities;
 
 import android.util.Log;
 

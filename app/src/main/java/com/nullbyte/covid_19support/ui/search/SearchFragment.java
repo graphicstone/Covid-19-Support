@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.R;
-import com.nullbyte.covid_19support.adapter.CountryListAdapter;
+import com.nullbyte.covid_19support.adapters.CountryListAdapter;
 import com.nullbyte.covid_19support.api.CasesByCountryAPI;
 import com.nullbyte.covid_19support.databinding.FragmentSearchBinding;
 

@@ -2,7 +2,7 @@ package com.nullbyte.covid_19support.api;
 
 import android.os.AsyncTask;
 
-import com.nullbyte.covid_19support.callback.APICallback;
+import com.nullbyte.covid_19support.callbacks.APICallback;
 
 import java.io.IOException;
 import java.util.Objects;
