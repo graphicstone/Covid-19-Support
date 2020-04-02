@@ -14,6 +14,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.WebActivity" />
         <activity
+            android:name=".ui.activities.CountryStatActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

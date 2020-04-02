@@ -5,9 +5,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public class ISOCodeUtility {
-    public Map<String, String> countryCodes = new HashMap<>();
+    public static Map<String, String> countryCodes = new HashMap<>();
 
-    public String getIsoCode(String mCountryName) {
+    public static String getIsoCode(String mCountryName) {
+
 
         countryCodes.put("Afghanistan", "AFG");
         countryCodes.put("Aruba", "ABW");
@@ -60,26 +61,26 @@ public class ISOCodeUtility {
         countryCodes.put("China", "CHN");
         countryCodes.put("Christmas Island", "CXR");
         countryCodes.put("Cocos (Keeling) Islands (the)", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
-        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
+//        countryCodes.put("", "");
 
 
 
