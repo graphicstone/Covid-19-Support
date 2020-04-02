@@ -51,7 +51,7 @@ public class CountryStatFragment extends Fragment {
     private ArrayList<String> mCasesListTotal;
     private ArrayList<String> mDeceasedListTotal;
     private ArrayList<String> mRecoveredListTotal;
-    private String countryName;
+    private String countryName, mCountryCode;
     private Long mDeceased, mRecovered;
     private DialogFragment dialogFragment;
 
@@ -67,10 +67,11 @@ public class CountryStatFragment extends Fragment {
 
 
         mCountryStatBinding.tvCountryName.setText(countryName);
+
         mCountryStatBinding.toolbarCountryStat.setNavigationOnClickListener(view -> Objects.requireNonNull(getActivity()).onBackPressed());
         mCountryStatBinding.countryRefreshLayout.setOnRefreshListener(() -> getCountryStat(countryName));
         getCountryStat(countryName);
-        getCountryDateWiseData();
+
 
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         Fragment prev = getParentFragmentManager().findFragmentByTag("dialog");
@@ -80,6 +81,12 @@ public class CountryStatFragment extends Fragment {
         ft.addToBackStack(null);
         dialogFragment = new LoaderDialogPunchCorona();
         dialogFragment.show(ft, "dialog");
+
+        if(mCountryCode!="NA")
+            getCountryDateWiseData();
+        else
+            dialogFragment.dismiss();
+
 
 
         return mCountryStatBinding.getRoot();
@@ -121,8 +128,7 @@ public class CountryStatFragment extends Fragment {
     }
 
     private void getCountryDateWiseData() {
-        String countryCode = ISOCodeUtility.getIsoCode(countryName);
-        CasesByCountryDateAPI casesByCountryDateAPI = new CasesByCountryDateAPI(countryCode, data -> {
+        CasesByCountryDateAPI casesByCountryDateAPI = new CasesByCountryDateAPI(mCountryCode, data -> {
             if (data == null) {
                 Snackbar snackbar = Snackbar.make(mCountryStatBinding.getRoot(), "Please check your network connection", Snackbar.LENGTH_LONG);
                 snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
@@ -332,6 +338,7 @@ public class CountryStatFragment extends Fragment {
 
     private void initViews() {
         countryName = getTag();
+        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
         mCasesListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
         mDeceasedListTotal = new ArrayList<>();

@@ -61,6 +61,7 @@ public class TrackerFragment extends Fragment {
         init();
         mTrackerBinding.refreshWorldDataLayout.setOnRefreshListener(() -> getWorldData(mTrackerBinding.getRoot()));
 
+
         getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());
 
