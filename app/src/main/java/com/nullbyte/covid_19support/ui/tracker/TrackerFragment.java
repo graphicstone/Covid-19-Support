@@ -30,7 +30,7 @@ import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.GlobalDateWiseAPI;
 import com.nullbyte.covid_19support.api.WorldDataAPI;
 import com.nullbyte.covid_19support.databinding.FragmentTrackerBinding;
-import com.nullbyte.covid_19support.utility.GraphUtility;
+import com.nullbyte.covid_19support.utilities.GraphUtility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,8 +47,8 @@ public class TrackerFragment extends Fragment {
     private ArrayList<String> mCasesListTotal;
     private ArrayList<String> mDeceasedListTotal;
     private ArrayList<String> mRecoveredListTotal;
-    private Long mDeceased,mRecovered;
-    DialogFragment dialogFragment;
+    private Long mDeceased, mRecovered;
+    private DialogFragment dialogFragment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class TrackerFragment extends Fragment {
         getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        Fragment prev = getParentFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
@@ -139,6 +139,7 @@ public class TrackerFragment extends Fragment {
             } else {
                 try {
                     JSONObject dataObject = new JSONObject(data);
+                    Log.i("AllData", data);
                     mTrackerBinding.tvTotalCases.setText(dataObject.getString("total_cases"));
                     mTrackerBinding.tvTotalDeaths.setText(dataObject.getString("total_deaths"));
                     mTrackerBinding.tvTotalRecovered.setText(dataObject.getString("total_recovered"));
@@ -162,22 +163,21 @@ public class TrackerFragment extends Fragment {
 
     }
 
-    public void drawGraphs() {
-        Log.i("anant","pie");
+    private void drawGraphs() {
+        Log.i("anant", "pie");
         drawPie();
         drawGraphforTotalCases();
         drawGraphForDeath();
         drawGraphForRecovered();
     }
 
-    private void drawPie()
-    {
+    private void drawPie() {
 
-        mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size()-1));
-        mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size()-1));
+        mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
+        mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
         PieChart mPieChart = mTrackerBinding.piechartoverall;
         ArrayList<PieEntry> sessDataPie1 = new ArrayList<>();
-        Log.i("anant",mDeceased +" "+mRecovered);
+        Log.i("anant", mDeceased + " " + mRecovered);
         sessDataPie1.add(new PieEntry(mRecovered, "Recovered"));
         sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
         GraphUtility.piechart(mPieChart, sessDataPie1);
@@ -224,7 +224,7 @@ public class TrackerFragment extends Fragment {
     private ArrayList<Entry> getDataforTotalCases() {
         ArrayList<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mDateListTotal.size(); i++) {
-            entries.add(new Entry(Float.valueOf(i), Float.valueOf(mCasesListTotal.get(i))));
+            entries.add(new Entry((float) i, Float.parseFloat(mCasesListTotal.get(i))));
         }
         Log.i("yaxis", entries.toString());
 
@@ -273,7 +273,7 @@ public class TrackerFragment extends Fragment {
     private ArrayList<Entry> getDataforTotalDeath() {
         ArrayList<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mDateListTotal.size(); i++) {
-            entries.add(new Entry(Float.valueOf(i), Float.valueOf(mDeceasedListTotal.get(i))));
+            entries.add(new Entry((float) i, Float.parseFloat(mDeceasedListTotal.get(i))));
         }
         Log.i("yaxis", entries.toString());
         return entries;
@@ -318,7 +318,7 @@ public class TrackerFragment extends Fragment {
     private ArrayList<Entry> getDataforTotalRecovered() {
         ArrayList<Entry> entries = new ArrayList<>();
         for (int i = 0; i < mDateListTotal.size(); i++) {
-            entries.add(new Entry(Float.valueOf(i), Float.valueOf(mRecoveredListTotal.get(i))));
+            entries.add(new Entry((float) i, Float.parseFloat(mRecoveredListTotal.get(i))));
         }
         Log.i("yaxis", entries.toString());
         return entries;

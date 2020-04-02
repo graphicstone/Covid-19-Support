@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.utility;
+package com.nullbyte.covid_19support.utilities;
 
 import android.graphics.Color;
 
@@ -19,7 +19,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 public class GraphUtility {
-    public static final void piechart(PieChart piechart, ArrayList<PieEntry> arrayList) {
+    public static void piechart(PieChart piechart, ArrayList<PieEntry> arrayList) {
         piechart.setUsePercentValues(true);
         piechart.getDescription().setEnabled(false);
         piechart.setExtraOffsets(2, 5, 2, 2);
@@ -48,7 +48,7 @@ public class GraphUtility {
 
     }
 
-    public static final void barchart(BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
+    public static void barchart(BarChart barChart, ArrayList<BarEntry> arrayList, final ArrayList<String> xAxisValues) {
         barChart.setDrawBarShadow(false);
         barChart.setFitBars(true);
         barChart.setDrawValueAboveBar(true);

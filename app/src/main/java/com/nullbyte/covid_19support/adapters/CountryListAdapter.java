@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.adapter;
+package com.nullbyte.covid_19support.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -52,6 +52,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView countryName, casesCount;
+
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
