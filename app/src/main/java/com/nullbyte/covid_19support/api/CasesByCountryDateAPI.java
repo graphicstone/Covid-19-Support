@@ -1,6 +1,7 @@
 package com.nullbyte.covid_19support.api;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nullbyte.covid_19support.callbacks.APICallback;
 
@@ -15,17 +16,20 @@ public class CasesByCountryDateAPI extends AsyncTask<Void, Void, String> {
 
     private APICallback apiCallback;
     private String responseString;
+    private String mCountyName;
 
-    public CasesByCountryDateAPI(APICallback apiCallback) {
+    public CasesByCountryDateAPI(String mCountyName, APICallback apiCallback) {
+        this.mCountyName = mCountyName;
         this.apiCallback = apiCallback;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
+        Log.i("Desh", mCountyName);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://covidapi.info/api/v1/country/IND")
+                .url("https://covidapi.info/api/v1/country/" + mCountyName)
                 .method("GET", null)
                 .build();
         try {
@@ -40,7 +44,7 @@ public class CasesByCountryDateAPI extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        Log.i("zxcv", responseString);
         apiCallback.getData(responseString);
     }
 }
-

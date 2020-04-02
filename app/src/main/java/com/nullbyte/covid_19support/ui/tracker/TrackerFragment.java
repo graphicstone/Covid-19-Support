@@ -56,9 +56,6 @@ public class TrackerFragment extends Fragment {
                 ViewModelProviders.of(this).get(TrackerViewModel.class);
         mTrackerBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracker, container, false);
         mTrackerBinding.setTrackerViewModel(mTrackerViewModel);
-        mTrackerViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-
-        });
 
         init();
         mTrackerBinding.refreshWorldDataLayout.setOnRefreshListener(() -> getWorldData(mTrackerBinding.getRoot()));

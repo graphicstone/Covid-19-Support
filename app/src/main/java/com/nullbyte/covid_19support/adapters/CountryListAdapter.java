@@ -2,16 +2,22 @@ package com.nullbyte.covid_19support.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.ui.CountryStatActivity;
+import com.nullbyte.covid_19support.ui.MainActivity;
+import com.nullbyte.covid_19support.ui.country_stat.CountryStatFragment;
+import com.nullbyte.covid_19support.ui.search.SearchFragment;
 
 import java.util.ArrayList;
 
