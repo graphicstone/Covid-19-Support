@@ -1,10 +1,13 @@
 package com.nullbyte.covid_19support.api;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nullbyte.covid_19support.callbacks.APICallback;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
@@ -17,7 +20,9 @@ public class CasesByCountryDateAPI extends AsyncTask<Void, Void, String> {
     private String responseString;
     private String mCountyName;
 
-    public CasesByCountryDateAPI(APICallback apiCallback, String mCountyName) {
+
+
+    public CasesByCountryDateAPI(APICallback apiCallback,String mCountyName) {
         this.apiCallback = apiCallback;
         this.mCountyName = mCountyName;
     }
@@ -27,12 +32,15 @@ public class CasesByCountryDateAPI extends AsyncTask<Void, Void, String> {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://covidapi.info/api/v1/country/IND")
+                .url("https://covidapi.info/api/v1/country/"+mCountyName)
                 .method("GET", null)
                 .build();
         try {
             Response response = client.newCall(request).execute();
             responseString = Objects.requireNonNull(response.body()).string();
+//            Log.i("Desh",mCountyName);
+             Log.i("Desh",responseString);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
