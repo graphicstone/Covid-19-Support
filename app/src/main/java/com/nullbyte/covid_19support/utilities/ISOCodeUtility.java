@@ -221,7 +221,7 @@ public class ISOCodeUtility {
 
         countryCodes.put("Republic of North Macedonia", "MKD");
         countryCodes.put("Romania", "ROU");
-        countryCodes.put("Russian Federation", "RUS");
+        countryCodes.put("Russia", "RUS");
         countryCodes.put("Rwanda", "RWA");
         countryCodes.put("Réunion", "REU");
 
