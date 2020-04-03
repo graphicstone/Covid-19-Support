@@ -320,6 +320,7 @@
                         app:layout_constraintTop_toBottomOf="@id/ll_cases_per_million">
 
                         <TextView
+                            android:id="@+id/text_total_cases"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp_16"
@@ -348,6 +349,7 @@
                         app:layout_constraintTop_toBottomOf="@id/chart1">
 
                         <TextView
+                            android:id="@+id/text_recvsdec"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp_16"
@@ -416,34 +418,6 @@
                             android:layout_height="200dp"
                             android:paddingStart="@dimen/dp_8"
                             android:paddingEnd="@dimen/dp_8" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_last_updated"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dp_16"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/chart3">
-
-                        <TextView
-                            android:id="@+id/tv_last_updated_heading"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/last_updated_on"
-                            android:textSize="@dimen/sp_16" />
-
-                        <TextView
-                            android:id="@+id/tv_last_updated_date_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_8"
-                            android:textSize="@dimen/sp_16" />
 
                     </LinearLayout>
 

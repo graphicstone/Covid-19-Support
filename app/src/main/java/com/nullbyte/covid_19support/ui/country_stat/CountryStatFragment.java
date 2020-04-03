@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
 
+import static android.view.View.GONE;
+
 public class CountryStatFragment extends Fragment {
 
     private CountryStatViewModel mViewModel;
@@ -54,7 +57,10 @@ public class CountryStatFragment extends Fragment {
     private String countryName, mCountryCode;
     private Long mDeceased, mRecovered;
     private DialogFragment dialogFragment;
-
+    boolean showGraph = true;
+    PieChart mPieChart1;
+    LineChart lineChart1,lineChart2,lineChart3;
+    LinearLayout mTotalLayout, mRecVsDecLayout, mDecLayout, mRecLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -82,13 +88,15 @@ public class CountryStatFragment extends Fragment {
         dialogFragment = new LoaderDialogPunchCorona();
         dialogFragment.show(ft, "dialog");
 
-        if(mCountryCode!="NA")
+        if(!mCountryCode.equals("NA"))
+        {
             getCountryDateWiseData();
+        }
         else
+        {
             dialogFragment.dismiss();
-
-
-
+            showGraph = false;
+        }
         return mCountryStatBinding.getRoot();
     }
 
@@ -158,23 +166,41 @@ public class CountryStatFragment extends Fragment {
                         Log.i("Recovered", value.getString("recovered"));
                         Log.i("Deceased", value.getString("deaths"));
                     }
+                    showGraph = true;
+                    dialogFragment.dismiss();
+                    drawGraphs();
+                    Log.i("Date", mDateListTotal.toString());
+                    Log.i("Cases", mCasesListTotal.toString());
+                    Log.i("Recovered", mRecoveredListTotal.toString());
+                    Log.i("Deceased", mDeceasedListTotal.toString());
+
                 } catch (JSONException e) {
                     Log.i("Catch", String.valueOf(e));
+                    dialogFragment.dismiss();
+                    showGraph = false;
                     e.printStackTrace();
                 }
 
-                dialogFragment.dismiss();
-                drawGraphs();
-
+                if(!showGraph)
+                {
+                    hideGraphs();
+                }
             }
-
-            Log.i("Date", mDateListTotal.toString());
-            Log.i("Cases", mCasesListTotal.toString());
-            Log.i("Recovered", mRecoveredListTotal.toString());
-            Log.i("Deceased", mDeceasedListTotal.toString());
-
         });
         casesByCountryDateAPI.execute();
+    }
+
+    private void hideGraphs()
+    {
+//        lineChart1.setVisibility(GONE);
+//        lineChart2.setVisibility(GONE);
+//        lineChart3.setVisibility(GONE);
+//        mPieChart1.setVisibility(GONE);
+        mRecLayout.setVisibility(GONE);
+        mDecLayout.setVisibility(GONE);
+        mRecVsDecLayout.setVisibility(GONE);
+        mTotalLayout.setVisibility(GONE);
+
     }
 
     private void drawGraphs() {
@@ -189,21 +215,21 @@ public class CountryStatFragment extends Fragment {
 
         mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
         mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
-        PieChart mPieChart = mCountryStatBinding.piechartoverall;
+
         ArrayList<PieEntry> sessDataPie1 = new ArrayList<>();
         Log.i("anant", mDeceased + " " + mRecovered);
         sessDataPie1.add(new PieEntry(mRecovered, "Recovered"));
         sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
-        GraphUtility.piechart(mPieChart, sessDataPie1);
-        mPieChart.setVisibility(View.VISIBLE);
+        GraphUtility.piechart(mPieChart1, sessDataPie1);
+        mPieChart1.setVisibility(View.VISIBLE);
     }
 
     private void drawGraphforTotalCases() {
-        LineChart lineChart = mCountryStatBinding.lineChart1;
+
         LineDataSet lineDataSet = new LineDataSet(getDataforTotalCases(), "Total Cases");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
-        XAxis xAxis = lineChart.getXAxis();
+        XAxis xAxis = lineChart1.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
@@ -218,18 +244,18 @@ public class CountryStatFragment extends Fragment {
         xAxis.setGranularity(0f);
         xAxis.setValueFormatter(formatter);
 
-        YAxis yAxisRight = lineChart.getAxisRight();
+        YAxis yAxisRight = lineChart1.getAxisRight();
         yAxisRight.setEnabled(false);
         xAxis.setLabelRotationAngle(-90);
 
-        YAxis yAxisLeft = lineChart.getAxisLeft();
+        YAxis yAxisLeft = lineChart1.getAxisLeft();
         yAxisLeft.setGranularity(1f);
 
         LineData data = new LineData(lineDataSet);
-        lineChart.setData(data);
+        lineChart1.setData(data);
         data.setDrawValues(false);
-        lineChart.animateX(2500);
-        lineChart.invalidate();
+        lineChart1.animateX(2500);
+        lineChart1.invalidate();
 
     }
 
@@ -247,11 +273,10 @@ public class CountryStatFragment extends Fragment {
     }
 
     private void drawGraphForDeath() {
-        LineChart lineChart = mCountryStatBinding.lineChart2;
         LineDataSet lineDataSet = new LineDataSet(getDataforTotalDeath(), "Deceased");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.orange));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
-        XAxis xAxis = lineChart.getXAxis();
+        XAxis xAxis = lineChart2.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         String[] months = new String[mDateListTotal.size()];
@@ -267,18 +292,18 @@ public class CountryStatFragment extends Fragment {
         xAxis.setGranularity(0f);
         xAxis.setValueFormatter(formatter);
 
-        YAxis yAxisRight = lineChart.getAxisRight();
+        YAxis yAxisRight = lineChart2.getAxisRight();
         yAxisRight.setEnabled(false);
         xAxis.setLabelRotationAngle(-90);
 
-        YAxis yAxisLeft = lineChart.getAxisLeft();
+        YAxis yAxisLeft = lineChart2.getAxisLeft();
         yAxisLeft.setGranularity(1f);
 
         LineData data = new LineData(lineDataSet);
-        lineChart.setData(data);
+        lineChart2.setData(data);
         data.setDrawValues(false);
-        lineChart.animateX(2500);
-        lineChart.invalidate();
+        lineChart2.animateX(2500);
+        lineChart2.invalidate();
 
     }
 
@@ -292,11 +317,10 @@ public class CountryStatFragment extends Fragment {
     }
 
     private void drawGraphForRecovered() {
-        LineChart lineChart = mCountryStatBinding.lineChart3;
         LineDataSet lineDataSet = new LineDataSet(getDataforTotalRecovered(), "Recovered");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.blue));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
-        XAxis xAxis = lineChart.getXAxis();
+        XAxis xAxis = lineChart3.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         String[] months = new String[mDateListTotal.size()];
@@ -312,18 +336,18 @@ public class CountryStatFragment extends Fragment {
         xAxis.setGranularity(0f);
         xAxis.setValueFormatter(formatter);
 
-        YAxis yAxisRight = lineChart.getAxisRight();
+        YAxis yAxisRight = lineChart3.getAxisRight();
         yAxisRight.setEnabled(false);
         xAxis.setLabelRotationAngle(-90);
 
-        YAxis yAxisLeft = lineChart.getAxisLeft();
+        YAxis yAxisLeft = lineChart3.getAxisLeft();
         yAxisLeft.setGranularity(1f);
 
         LineData data = new LineData(lineDataSet);
-        lineChart.setData(data);
+        lineChart3.setData(data);
         data.setDrawValues(false);
-        lineChart.animateX(2500);
-        lineChart.invalidate();
+        lineChart3.animateX(2500);
+        lineChart3.invalidate();
 
     }
 
@@ -343,6 +367,18 @@ public class CountryStatFragment extends Fragment {
         mRecoveredListTotal = new ArrayList<>();
         mDeceasedListTotal = new ArrayList<>();
         mDateListTotal = new ArrayList<>();
+
+        mPieChart1 = mCountryStatBinding.piechartoverall;
+        lineChart1 = mCountryStatBinding.lineChart1;
+        lineChart2 = mCountryStatBinding.lineChart2;
+        lineChart3 = mCountryStatBinding.lineChart3;
+
+        mTotalLayout = mCountryStatBinding.chart1;
+        mRecVsDecLayout = mCountryStatBinding.pieChartOverall;
+        mDecLayout = mCountryStatBinding.chart2;
+        mRecLayout = mCountryStatBinding.chart3;
+
     }
+
 
 }
