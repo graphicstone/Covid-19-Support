@@ -8,7 +8,7 @@
 
         <variable
             name="infoViewModel"
-            type="com.nullbyte.covid_19support.ui.updates.UpdatesViewModel" />
+            type="com.nullbyte.covid_19support.ui.fragments.updates.UpdatesViewModel" />
 
     </data>
 
@@ -16,7 +16,7 @@
         android:id="@+id/refresh_updates"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.updates.UpdatesFragment">
+        tools:context=".ui.fragments.updates.UpdatesFragment">
 
         <ScrollView
             android:layout_width="match_parent"

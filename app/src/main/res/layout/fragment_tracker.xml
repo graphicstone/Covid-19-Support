@@ -9,7 +9,7 @@
 
         <variable
             name="trackerViewModel"
-            type="com.nullbyte.covid_19support.ui.tracker.TrackerViewModel" />
+            type="com.nullbyte.covid_19support.ui.fragments.tracker.TrackerViewModel" />
 
     </data>
 
@@ -17,7 +17,7 @@
         android:id="@+id/refresh_world_data_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.tracker.TrackerFragment">
+        tools:context=".ui.fragments.tracker.TrackerFragment">
 
         <ScrollView
             android:layout_width="match_parent"

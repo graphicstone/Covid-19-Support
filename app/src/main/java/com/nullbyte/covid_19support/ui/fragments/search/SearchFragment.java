@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui.search;
+package com.nullbyte.covid_19support.ui.fragments.search;
 
 import android.os.Bundle;
 import android.text.Editable;
