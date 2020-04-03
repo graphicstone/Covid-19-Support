@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Objects;
 
 public class TrackerFragment extends Fragment {
@@ -59,6 +60,7 @@ public class TrackerFragment extends Fragment {
 
         init();
         mTrackerBinding.refreshWorldDataLayout.setOnRefreshListener(() -> getWorldData(mTrackerBinding.getRoot()));
+
 
         getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());

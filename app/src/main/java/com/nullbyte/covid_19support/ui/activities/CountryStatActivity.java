@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui;
+package com.nullbyte.covid_19support.ui.activities;
 
 import android.os.Bundle;
 
@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.ui.country_stat.CountryStatFragment;
+
 
 public class CountryStatActivity extends AppCompatActivity {
 
