@@ -44,6 +44,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.Random;
 
 public class TrackerFragment extends Fragment {
 
@@ -93,11 +94,64 @@ public class TrackerFragment extends Fragment {
         DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, new ViewCallback() {
             @Override
             public void onSuccess(View view, AlertDialog dialog) {
-                LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie_loader);
-                lottieAnimationView.setAnimation("corona.json");
-                lottieAnimationView.playAnimation();
-                lottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
+                LottieAnimationView mLottieAnimationView = view.findViewById(R.id.lottie_loader);
+
+                Random rand = new Random();
+                int ranNum = rand.nextInt(9);
+
+                switch (ranNum) {
+                    case 0:
+                        mLottieAnimationView.setAnimation("corona.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 1:
+                        mLottieAnimationView.setAnimation("punchCorona.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 2:
+                        mLottieAnimationView.setAnimation("docRunning.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 3:
+                        mLottieAnimationView.setAnimation("doctors.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 4:
+                        mLottieAnimationView.setAnimation("hand-sanitizer.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 5:
+                        mLottieAnimationView.setAnimation("staySafe.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 6:
+                        mLottieAnimationView.setAnimation("wash-hand.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 7:
+                        mLottieAnimationView.setAnimation("wfh.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                    case 8:
+                        mLottieAnimationView.setAnimation("mask.json");
+//                        mLottieAnimationView.playAnimation();
+//                        mLottieAnimationView.loop(true);
+                        break;
+                }
+                //lottieAnimationView.setAnimation("corona.json");
+
+                mLottieAnimationView.playAnimation();
+                mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
                 mAlertDialog = dialog;
+
             }
 
             @Override
