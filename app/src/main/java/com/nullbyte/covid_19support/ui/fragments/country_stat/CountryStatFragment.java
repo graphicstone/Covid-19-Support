@@ -382,8 +382,6 @@ public class CountryStatFragment extends Fragment {
                 switch (ranNum) {
                     case 0:
                         mLottieAnimationView.setAnimation("corona.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
                         break;
                     case 1:
                         mLottieAnimationView.setAnimation("punchCorona.json");

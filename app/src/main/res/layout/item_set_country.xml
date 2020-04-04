@@ -18,19 +18,31 @@
         android:textSize="@dimen/sp_20"
         android:textAlignment="center" />
 
-    <EditText
+<!--    <EditText-->
+<!--        android:id="@+id/et_country_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/dp_16"-->
+<!--        android:layout_marginStart="@dimen/dp_24"-->
+<!--        android:layout_marginEnd="@dimen/dp_24"-->
+<!--        android:padding="@dimen/dp_16"-->
+<!--        android:hint="@string/country_name"-->
+<!--        android:textSize="@dimen/sp_16"-->
+<!--        android:background="@drawable/light_boundary"-->
+<!--        android:inputType="text"-->
+<!--        android:importantForAutofill="no" />-->
+
+    <Spinner
         android:id="@+id/et_country_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
         android:layout_marginStart="@dimen/dp_24"
         android:layout_marginEnd="@dimen/dp_24"
         android:padding="@dimen/dp_16"
         android:hint="@string/country_name"
         android:textSize="@dimen/sp_16"
         android:background="@drawable/light_boundary"
-        android:inputType="text"
-        android:importantForAutofill="no" />
+        />
 
     <Button
         android:id="@+id/btn_submit"

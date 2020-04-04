@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +32,14 @@ import com.nullbyte.covid_19support.ui.fragments.search.SearchFragment;
 import com.nullbyte.covid_19support.ui.fragments.tracker.TrackerFragment;
 import com.nullbyte.covid_19support.ui.fragments.updates.UpdatesFragment;
 import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
+import com.nullbyte.covid_19support.utilities.ISOCodeUtility;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private SharedPreferences sharedpreferences;
     private Fragment trackerFragment = new TrackerFragment();
@@ -77,13 +86,24 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(View view, AlertDialog dialog) {
                         Button submit;
-                        EditText mCountryName;
+                        Spinner mCountryName;
                         SharedPreferences.Editor editor = sharedpreferences.edit();
                         mCountryName = view.findViewById(R.id.et_country_name);
+
+                        List<String> countryList = new ArrayList<>();
+                        countryList =ISOCodeUtility.getCountryList() ;
+                        Collections.sort(countryList);
+                        countryList.add(0,"Select your country");
+
+                        ArrayAdapter<String> adapter =
+                                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, countryList);
+                        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                        mCountryName.setAdapter(adapter);
                         submit = view.findViewById(R.id.btn_submit);
+
                         submit.setOnClickListener(view1 -> {
-                            if (mCountryName.getText() != null) {
-                                String countryName = mCountryName.getText().toString();
+                            if (mCountryName.getSelectedItem() != null && mCountryName.getSelectedItemPosition()>0) {
+                                String countryName = mCountryName.getSelectedItem().toString();
                                 editor.putString(Constant.COUNTRY_NAME, countryName);
                                 editor.apply();
                                 fm.beginTransaction().detach(countryFragment).attach(countryFragment).commit();
@@ -159,5 +179,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
