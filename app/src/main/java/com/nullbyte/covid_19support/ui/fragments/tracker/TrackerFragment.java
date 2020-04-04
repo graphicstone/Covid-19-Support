@@ -149,7 +149,7 @@ public class TrackerFragment extends Fragment {
                     //mDeceased = Long.valueOf(dataObject.getString("total_deaths"));
                     //mRecovered = Long.valueOf(dataObject.getString("total_recovered"));;
 
-                    dialogFragment.dismiss();
+                    //dialogFragment.dismiss();
 
                     drawGraphs();
                 } catch (JSONException e) {

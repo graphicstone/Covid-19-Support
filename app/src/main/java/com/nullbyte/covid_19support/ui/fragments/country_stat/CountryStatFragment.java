@@ -361,14 +361,19 @@ public class CountryStatFragment extends Fragment {
     private void initViews() {
         sharedpreferences  = requireActivity().getSharedPreferences(Constant.PREFERENCES, Context.MODE_PRIVATE);
         countryName = getTag();
-        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
+
+//        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
+
         if (getTag() != null && getTag().length() > 1) {
             countryName = getTag();
             mCountryStatBinding.toolbarCountryStat.setVisibility(View.VISIBLE);
         } else {
-            countryName = sharedpreferences.getString(Constant.COUNTRY_NAME, "INDIA");
+            countryName = sharedpreferences.getString(Constant.COUNTRY_NAME, "India");
             mCountryStatBinding.toolbarCountryStat.setVisibility(View.GONE);
+            //mCountryCode = ISOCodeUtility.getIsoCode(countryName);
         }
+        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
+        Log.i("anantcode",mCountryCode+"  "+sharedpreferences.getString(Constant.COUNTRY_NAME, "India"));
         mCasesListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
         mDeceasedListTotal = new ArrayList<>();
