@@ -1,15 +1,16 @@
 package com.nullbyte.covid_19support.utilities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 public class ISOCodeUtility {
     public static Map<String, String> countryCodes = new HashMap<>();
 
-    public static String getIsoCode(String mCountryName) {
-
-
+    public static void initMap()
+    {
         countryCodes.put("Afghanistan", "AFG");
         countryCodes.put("Aruba", "ABW");
         countryCodes.put("Albania", "ALB");
@@ -305,10 +306,24 @@ public class ISOCodeUtility {
 
 
         countryCodes.put("Åland Islands", "ALA");
+    }
+    public static String getIsoCode(String mCountryName) {
+
+
+        initMap();
 
         if(countryCodes.get(mCountryName)!=null)
             return countryCodes.get(mCountryName);
         else
             return "NA";
+    }
+
+    public static List<String>  getCountryList()
+    {
+        initMap();
+
+        List<String> list= new ArrayList<String>(countryCodes.keySet());
+
+        return list;
     }
 }
