@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.models.ArticleModel;
-import com.nullbyte.covid_19support.ui.WebActivity;
+import com.nullbyte.covid_19support.ui.activities.WebActivity;
 
 import java.util.List;
 

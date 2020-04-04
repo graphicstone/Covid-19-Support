@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui;
+package com.nullbyte.covid_19support.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;

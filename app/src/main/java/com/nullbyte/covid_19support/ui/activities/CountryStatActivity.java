@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.nullbyte.covid_19support.R;
-import com.nullbyte.covid_19support.ui.country_stat.CountryStatFragment;
+import com.nullbyte.covid_19support.ui.fragments.country_stat.CountryStatFragment;
 
 
 public class CountryStatActivity extends AppCompatActivity {

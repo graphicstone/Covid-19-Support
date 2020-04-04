@@ -1,4 +1,4 @@
-package com.nullbyte.covid_19support.ui.tracker;
+package com.nullbyte.covid_19support.ui.fragments.tracker;
 
 import androidx.lifecycle.ViewModel;
 
