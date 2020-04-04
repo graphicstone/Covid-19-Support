@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,12 +27,15 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.LoaderDialog;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.GlobalDateWiseAPI;
 import com.nullbyte.covid_19support.api.WorldDataAPI;
+import com.nullbyte.covid_19support.callbacks.ViewCallback;
 import com.nullbyte.covid_19support.databinding.FragmentTrackerBinding;
+import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
 import com.nullbyte.covid_19support.utilities.GraphUtility;
 
 import org.json.JSONException;
@@ -37,7 +43,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Objects;
 
 public class TrackerFragment extends Fragment {
@@ -50,6 +55,7 @@ public class TrackerFragment extends Fragment {
     private ArrayList<String> mRecoveredListTotal;
     private Long mDeceased, mRecovered;
     private DialogFragment dialogFragment;
+    private AlertDialog mAlertDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,19 +67,19 @@ public class TrackerFragment extends Fragment {
         init();
         mTrackerBinding.refreshWorldDataLayout.setOnRefreshListener(() -> getWorldData(mTrackerBinding.getRoot()));
 
-
-        getDateWiseData(mTrackerBinding.getRoot());
-        getWorldData(mTrackerBinding.getRoot());
-
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         Fragment prev = getParentFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
             ft.remove(prev);
         }
-        ft.addToBackStack(null);
-        dialogFragment = new LoaderDialog();
-        dialogFragment.show(ft, "dialog");
 
+        ft.addToBackStack(null);
+        mAlertDialog.show();
+//        dialogFragment = new LoaderDialog();
+//        dialogFragment.show(ft, "dialog");
+
+        getDateWiseData(mTrackerBinding.getRoot());
+        getWorldData(mTrackerBinding.getRoot());
 
         return mTrackerBinding.getRoot();
     }
@@ -84,6 +90,22 @@ public class TrackerFragment extends Fragment {
         mDeceasedListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
 
+        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, new ViewCallback() {
+            @Override
+            public void onSuccess(View view, AlertDialog dialog) {
+                LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie_loader);
+                lottieAnimationView.setAnimation("corona.json");
+                lottieAnimationView.playAnimation();
+                lottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
+                mAlertDialog = dialog;
+            }
+
+            @Override
+            public void onSuccessBottomSheet(View view, BottomSheetDialog dialog) {
+
+            }
+
+        });
     }
 
 
@@ -119,10 +141,6 @@ public class TrackerFragment extends Fragment {
                 }
 
             }
-            Log.i("Dates", mDateListTotal.toString());
-            Log.i("Cases", mCasesListTotal.toString());
-            Log.i("Deceased", mDeceasedListTotal.toString());
-            Log.i("Recovered", mRecoveredListTotal.toString());
 
         });
         globalDateWiseAPI.execute();
@@ -148,8 +166,7 @@ public class TrackerFragment extends Fragment {
                     mTrackerBinding.refreshWorldDataLayout.setRefreshing(false);
                     //mDeceased = Long.valueOf(dataObject.getString("total_deaths"));
                     //mRecovered = Long.valueOf(dataObject.getString("total_recovered"));;
-
-                    dialogFragment.dismiss();
+                    mAlertDialog.dismiss();
 
                     drawGraphs();
                 } catch (JSONException e) {
@@ -163,7 +180,6 @@ public class TrackerFragment extends Fragment {
     }
 
     private void drawGraphs() {
-        Log.i("anant", "pie");
         drawPie();
         drawGraphforTotalCases();
         drawGraphForDeath();
@@ -171,7 +187,6 @@ public class TrackerFragment extends Fragment {
     }
 
     private void drawPie() {
-
         mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
         mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
         PieChart mPieChart = mTrackerBinding.piechartoverall;

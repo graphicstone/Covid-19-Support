@@ -11,13 +11,15 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -28,13 +30,15 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.nullbyte.covid_19support.LoaderDialogPunchCorona;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.CasesByCountryDateAPI;
 import com.nullbyte.covid_19support.api.SearchByCountryAPI;
+import com.nullbyte.covid_19support.callbacks.ViewCallback;
 import com.nullbyte.covid_19support.constants.Constant;
 import com.nullbyte.covid_19support.databinding.FragmentCountryStatBinding;
+import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
 import com.nullbyte.covid_19support.utilities.GraphUtility;
 import com.nullbyte.covid_19support.utilities.ISOCodeUtility;
 
@@ -57,13 +61,11 @@ public class CountryStatFragment extends Fragment {
     private ArrayList<String> mDeceasedListTotal;
     private ArrayList<String> mRecoveredListTotal;
     private String countryName, mCountryCode;
-    private Long mDeceased, mRecovered;
-    private DialogFragment dialogFragment;
     private boolean showGraph = true;
     private PieChart mPieChart1;
     private LineChart lineChart1, lineChart2, lineChart3;
     private LinearLayout mTotalLayout, mRecVsDecLayout, mDecLayout, mRecLayout;
-    private SharedPreferences sharedpreferences;
+    private AlertDialog mAlertDialog;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,27 +76,23 @@ public class CountryStatFragment extends Fragment {
 
         initViews();
 
-
         mCountryStatBinding.tvCountryName.setText(countryName);
-
         mCountryStatBinding.toolbarCountryStat.setNavigationOnClickListener(view -> Objects.requireNonNull(getActivity()).onBackPressed());
+
         mCountryStatBinding.countryRefreshLayout.setOnRefreshListener(() -> getCountryStat(countryName));
         getCountryStat(countryName);
 
-
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         Fragment prev = getParentFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
+        if (prev != null)
             ft.remove(prev);
-        }
         ft.addToBackStack(null);
-        dialogFragment = new LoaderDialogPunchCorona();
-        dialogFragment.show(ft, "dialog");
+        mAlertDialog.show();
 
         if (!mCountryCode.equals("NA")) {
             getCountryDateWiseData();
         } else {
-            dialogFragment.dismiss();
+            mAlertDialog.dismiss();
             showGraph = false;
         }
         return mCountryStatBinding.getRoot();
@@ -167,7 +165,7 @@ public class CountryStatFragment extends Fragment {
                         Log.i("Deceased", value.getString("deaths"));
                     }
                     showGraph = true;
-                    dialogFragment.dismiss();
+                    mAlertDialog.dismiss();
                     drawGraphs();
                     Log.i("Date", mDateListTotal.toString());
                     Log.i("Cases", mCasesListTotal.toString());
@@ -176,7 +174,7 @@ public class CountryStatFragment extends Fragment {
 
                 } catch (JSONException e) {
                     Log.i("Catch", String.valueOf(e));
-                    dialogFragment.dismiss();
+                    mAlertDialog.dismiss();
                     showGraph = false;
                     e.printStackTrace();
                 }
@@ -202,41 +200,38 @@ public class CountryStatFragment extends Fragment {
     }
 
     private void drawGraphs() {
-        Log.i("anant", "pie");
         drawPie();
-        drawGraphforTotalCases();
+        drawGraphForTotalCases();
         drawGraphForDeath();
         drawGraphForRecovered();
     }
 
     private void drawPie() {
 
-        mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
-        mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
+        long mDeceased = Long.parseLong(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
+        long mRecovered = Long.parseLong(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
 
         ArrayList<PieEntry> sessDataPie1 = new ArrayList<>();
-        Log.i("anant", mDeceased + " " + mRecovered);
         sessDataPie1.add(new PieEntry(mRecovered, "Recovered"));
         sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
         GraphUtility.piechart(mPieChart1, sessDataPie1);
         mPieChart1.setVisibility(View.VISIBLE);
     }
 
-    private void drawGraphforTotalCases() {
-
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalCases(), "Total Cases");
+    private void drawGraphForTotalCases() {
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalCases(), "Total Cases");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart1.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -257,21 +252,15 @@ public class CountryStatFragment extends Fragment {
 
     }
 
-    private ArrayList<Entry> getDataforTotalCases() {
+    private ArrayList<Entry> getDataForTotalCases() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mCasesListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
-
-//        entries.add(new Entry(1f, 10f));
-//        entries.add(new Entry(2f, 20f));
-//        entries.add(new Entry(3f, 40f));
         return entries;
     }
 
     private void drawGraphForDeath() {
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalDeath(), "Deceased");
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalDeath(), "Deceased");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.orange));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart2.getXAxis();
@@ -305,17 +294,15 @@ public class CountryStatFragment extends Fragment {
 
     }
 
-    private ArrayList<Entry> getDataforTotalDeath() {
+    private ArrayList<Entry> getDataForTotalDeath() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mDeceasedListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
         return entries;
     }
 
     private void drawGraphForRecovered() {
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalRecovered(), "Recovered");
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalRecovered(), "Recovered");
         lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.blue));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart3.getXAxis();
@@ -323,12 +310,12 @@ public class CountryStatFragment extends Fragment {
 
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -349,26 +336,25 @@ public class CountryStatFragment extends Fragment {
 
     }
 
-    private ArrayList<Entry> getDataforTotalRecovered() {
+    private ArrayList<Entry> getDataForTotalRecovered() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mRecoveredListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
         return entries;
     }
 
     private void initViews() {
-        sharedpreferences  = requireActivity().getSharedPreferences(Constant.PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = requireActivity().getSharedPreferences(Constant.PREFERENCES, Context.MODE_PRIVATE);
         countryName = getTag();
-        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
         if (getTag() != null && getTag().length() > 1) {
             countryName = getTag();
             mCountryStatBinding.toolbarCountryStat.setVisibility(View.VISIBLE);
         } else {
-            countryName = sharedpreferences.getString(Constant.COUNTRY_NAME, "INDIA");
+            countryName = sharedpreferences.getString(Constant.COUNTRY_NAME, "India");
             mCountryStatBinding.toolbarCountryStat.setVisibility(View.GONE);
         }
+        mCountryCode = ISOCodeUtility.getIsoCode(countryName);
+
         mCasesListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
         mDeceasedListTotal = new ArrayList<>();
@@ -383,6 +369,23 @@ public class CountryStatFragment extends Fragment {
         mRecVsDecLayout = mCountryStatBinding.pieChartOverall;
         mDecLayout = mCountryStatBinding.chart2;
         mRecLayout = mCountryStatBinding.chart3;
+
+        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, new ViewCallback() {
+            @Override
+            public void onSuccess(View view, AlertDialog dialog) {
+                LottieAnimationView lottieAnimationView = view.findViewById(R.id.lottie_loader);
+                lottieAnimationView.setAnimation("corona.json");
+                lottieAnimationView.playAnimation();
+                lottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
+                mAlertDialog = dialog;
+            }
+
+            @Override
+            public void onSuccessBottomSheet(View view, BottomSheetDialog dialog) {
+
+            }
+
+        });
 
     }
 
