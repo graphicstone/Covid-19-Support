@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                                 String countryName = mCountryName.getText().toString();
                                 editor.putString(Constant.COUNTRY_NAME, countryName);
                                 editor.apply();
+                                fm.beginTransaction().detach(countryFragment).attach(countryFragment).commit();
                                 dialog.dismiss();
                             } else
                                 Toast.makeText(MainActivity.this, "Please enter country name", Toast.LENGTH_SHORT).show();
