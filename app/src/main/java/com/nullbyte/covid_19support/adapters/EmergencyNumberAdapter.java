@@ -11,19 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nullbyte.covid_19support.R;
+import com.nullbyte.covid_19support.models.ContactModel;
 import com.nullbyte.covid_19support.ui.activities.CountryStatActivity;
 
 import java.util.ArrayList;
 
-public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.ViewHolder> {
+public class EmergencyNumberAdapter extends RecyclerView.Adapter<EmergencyNumberAdapter.ViewHolder> {
 
-    private ArrayList<String> countriesList;
-    private ArrayList<String> casesList;
+    private ArrayList<ContactModel> stateNumList;
     private Context mContext;
 
-    public CountryListAdapter(ArrayList<String> countriesList, ArrayList<String> casesList) {
-        this.countriesList = countriesList;
-        this.casesList = casesList;
+    public EmergencyNumberAdapter(ArrayList<ContactModel> stateNumList) {
+        this.stateNumList = stateNumList;
     }
 
     @NonNull
@@ -35,29 +34,24 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.countryName.setText(countriesList.get(position));
-        holder.casesCount.setText(casesList.get(position));
+        holder.stateName.setText(stateNumList.get(position).getmStateName());
+        holder.contNum.setText(stateNumList.get(position).getmNumber());
 
-        holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(mContext.getApplicationContext(), CountryStatActivity.class);
-            intent.putExtra("Country", countriesList.get(position));
-            mContext.startActivity(intent);
-        });
     }
 
     @Override
     public int getItemCount() {
-        return countriesList.size();
+        return stateNumList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView countryName, casesCount;
+        TextView stateName, contNum;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            countryName = itemView.findViewById(R.id.tv_country_name);
-            casesCount = itemView.findViewById(R.id.tv_cases_count);
+            stateName = itemView.findViewById(R.id.tv_country_name);
+            contNum = itemView.findViewById(R.id.tv_cases_count);
         }
     }
 }

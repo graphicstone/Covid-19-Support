@@ -18,14 +18,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.callbacks.ViewCallback;
 import com.nullbyte.covid_19support.constants.Constant;
+import com.nullbyte.covid_19support.ui.EmergencyNumFragment;
 import com.nullbyte.covid_19support.ui.fragments.country_stat.CountryStatFragment;
 import com.nullbyte.covid_19support.ui.fragments.info.InfoFragment;
 import com.nullbyte.covid_19support.ui.fragments.search.SearchFragment;
@@ -48,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     final Fragment updatesFragment = new UpdatesFragment();
     final Fragment countryFragment = new CountryStatFragment();
     final FragmentManager fm = getSupportFragmentManager();
+    private DialogFragment emergencyDialog;
     Fragment active = trackerFragment;
+    private FloatingActionButton mFab;
     private BottomNavigationView bottomNavigationView;
     private TextView mTitleBar;
     private RadioGroup mRadioGroup;
@@ -73,6 +78,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mMyCountry = findViewById(R.id.rb_my_country);
         mTitleBar.setText(R.string.home);
         mToolbar = findViewById(R.id.toolbar_main);
+        mFab = findViewById(R.id.floating_action_button);
+
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                emergencyCall();
+            }
+        });
+
 
         fm.beginTransaction().add(R.id.main_container, countryFragment, "5").hide(countryFragment).commit();
         fm.beginTransaction().add(R.id.main_container, updatesFragment, "4").hide(updatesFragment).commit();
@@ -91,18 +105,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         mCountryName = view.findViewById(R.id.et_country_name);
 
                         List<String> countryList = new ArrayList<>();
-                        countryList =ISOCodeUtility.getCountryList() ;
+                        countryList = ISOCodeUtility.getCountryList();
                         Collections.sort(countryList);
-                        countryList.add(0,"Select your country");
+                        countryList.add(0, "Select your country");
 
                         ArrayAdapter<String> adapter =
-                                new ArrayAdapter<String>(getApplicationContext(),  android.R.layout.simple_spinner_dropdown_item, countryList);
-                        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                                new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, countryList);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mCountryName.setAdapter(adapter);
                         submit = view.findViewById(R.id.btn_submit);
 
                         submit.setOnClickListener(view1 -> {
-                            if (mCountryName.getSelectedItem() != null && mCountryName.getSelectedItemPosition()>0) {
+                            if (mCountryName.getSelectedItem() != null && mCountryName.getSelectedItemPosition() > 0) {
                                 String countryName = mCountryName.getSelectedItem().toString();
                                 editor.putString(Constant.COUNTRY_NAME, countryName);
                                 editor.apply();
@@ -164,6 +178,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             return true;
         });
+    }
+
+    private void emergencyCall() {
+        emergencyDialog = new EmergencyNumFragment();
+        emergencyDialog.show(fm,"Emergency");
     }
 
     @Override
