@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.nullbyte.covid_19support.databinding.FragmentTrackerBinding;
 
 public class LoaderDialog extends DialogFragment {
@@ -38,9 +39,9 @@ public class LoaderDialog extends DialogFragment {
 
         LottieAnimationView mLottieAnimationView;
         mLottieAnimationView = view.findViewById(R.id.stayhome);
-        mLottieAnimationView.setAnimation("stayhome.json");
+        mLottieAnimationView.setAnimation("staySafe.json");
         mLottieAnimationView.playAnimation();
-        mLottieAnimationView.loop(true);
+        mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
 
         return view;
     }

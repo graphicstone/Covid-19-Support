@@ -11,11 +11,12 @@
         android:id="@+id/toolbar_web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/divider"
+        android:background="@color/accent"
+        app:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_close_black_24dp" />
+        app:navigationIcon="@drawable/ic_close_white_24dp" />
 
     <WebView
         android:id="@+id/web_view"

@@ -55,6 +55,19 @@
     <string name="article_image">Article Image</string>
     <string name="world">World</string>
     <string name="my_country">My Country</string>
-    <string name="please_enter_your_country">Please enter your country</string>
+    <string name="please_enter_your_country">Please select your country</string>
     <string name="submit">Submit</string>
+    <string name="emergency_contact_numbers">Emergency Contact Numbers</string>
+    <string name="credits">Credits</string>
+    <string name="reset_country">Reset Country</string>
+    <string name="app_info">App Info</string>
+    <string name="app_info_content">COVID-19 support app for providing useful information regarding the pandemic and real time updates about the disease from around the world. Stay home. Stay safe.</string>
+    <string name="contributors">Contributors</string>
+    <string name="harishiv_singh">Harishiv Singh</string>
+    <string name="anant_raman">Anant Raman</string>
+    <string name="special_credits">Special Credits</string>
+    <string name="credit_name">Credit name</string>
+    <string name="repository">Repository</string>
+    <string name="number">Number</string>
+    <string name="state">State</string>
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
@@ -29,6 +30,9 @@ public class WebActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         init();
 

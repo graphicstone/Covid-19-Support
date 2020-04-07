@@ -248,7 +248,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/chart1"
+                    android:id="@+id/ll_chart1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_16"
@@ -263,7 +263,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:text="@string/total_cases"
                         android:textStyle="bold"
-                        android:textColor="@color/green"
+                        android:textColor="@color/primary_text"
                         android:textSize="@dimen/sp_16" />
 
                     <com.github.mikephil.charting.charts.LineChart
@@ -276,14 +276,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/pieChartOverall"
+                    android:id="@+id/ll_pie_chart_overall"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/dp_16"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart1">
+                    app:layout_constraintTop_toBottomOf="@id/ll_chart1">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -291,7 +291,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:text="@string/recovered_vs_deceased"
                         android:textStyle="bold"
-                        android:textColor="@color/green"
+                        android:textColor="@color/primary_text"
                         android:textSize="@dimen/sp_16" />
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -303,14 +303,14 @@
 
 
                 <LinearLayout
-                    android:id="@+id/chart2"
+                    android:id="@+id/ll_chart2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_16"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pieChartOverall">
+                    app:layout_constraintTop_toBottomOf="@id/ll_pie_chart_overall">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -318,7 +318,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:text="@string/total_deceased"
                         android:textStyle="bold"
-                        android:textColor="@color/orange"
+                        android:textColor="@color/red"
                         android:textSize="@dimen/sp_16" />
 
                     <com.github.mikephil.charting.charts.LineChart
@@ -331,14 +331,14 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/chart3"
+                    android:id="@+id/ll_chart3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_16"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart2">
+                    app:layout_constraintTop_toBottomOf="@id/ll_chart2">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -346,7 +346,7 @@
                         android:layout_marginStart="@dimen/dp_16"
                         android:text="@string/total_recovered"
                         android:textStyle="bold"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/green"
                         android:textSize="@dimen/sp_16" />
 
                     <com.github.mikephil.charting.charts.LineChart
@@ -368,7 +368,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart3">
+                    app:layout_constraintTop_toBottomOf="@id/ll_chart3">
 
                     <TextView
                         android:id="@+id/tv_last_updated_heading"

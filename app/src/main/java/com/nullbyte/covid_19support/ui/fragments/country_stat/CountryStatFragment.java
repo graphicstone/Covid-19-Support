@@ -30,12 +30,10 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.CasesByCountryDateAPI;
 import com.nullbyte.covid_19support.api.SearchByCountryAPI;
-import com.nullbyte.covid_19support.callbacks.ViewCallback;
 import com.nullbyte.covid_19support.constants.Constant;
 import com.nullbyte.covid_19support.databinding.FragmentCountryStatBinding;
 import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
@@ -49,7 +47,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.Random;
 
 import static android.view.View.GONE;
 
@@ -78,7 +75,6 @@ public class CountryStatFragment extends Fragment {
         initViews();
 
         mCountryStatBinding.tvCountryName.setText(countryName);
-        mCountryStatBinding.toolbarCountryStat.setNavigationOnClickListener(view -> Objects.requireNonNull(getActivity()).onBackPressed());
 
         mCountryStatBinding.countryRefreshLayout.setOnRefreshListener(() -> getCountryStat(countryName));
         getCountryStat(countryName);
@@ -112,7 +108,8 @@ public class CountryStatFragment extends Fragment {
                     if (data.charAt(i) == '[')
                         splitPoint = i;
                 }
-                data = data.substring(splitPoint, data.length() - 1);
+                if (splitPoint > 0)
+                    data = data.substring(splitPoint, data.length() - 1);
                 try {
                     JSONArray jsonArr = new JSONArray(data);
                     for (int i = 0; i < data.length(); ++i) {
@@ -189,10 +186,6 @@ public class CountryStatFragment extends Fragment {
     }
 
     private void hideGraphs() {
-//        lineChart1.setVisibility(GONE);
-//        lineChart2.setVisibility(GONE);
-//        lineChart3.setVisibility(GONE);
-//        mPieChart1.setVisibility(GONE);
         mRecLayout.setVisibility(GONE);
         mDecLayout.setVisibility(GONE);
         mRecVsDecLayout.setVisibility(GONE);
@@ -221,7 +214,7 @@ public class CountryStatFragment extends Fragment {
 
     private void drawGraphForTotalCases() {
         LineDataSet lineDataSet = new LineDataSet(getDataForTotalCases(), "Total Cases");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary));
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary_text));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart1.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -262,19 +255,19 @@ public class CountryStatFragment extends Fragment {
 
     private void drawGraphForDeath() {
         LineDataSet lineDataSet = new LineDataSet(getDataForTotalDeath(), "Deceased");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.orange));
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.red));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart2.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -304,7 +297,7 @@ public class CountryStatFragment extends Fragment {
 
     private void drawGraphForRecovered() {
         LineDataSet lineDataSet = new LineDataSet(getDataForTotalRecovered(), "Recovered");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.blue));
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.green));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart3.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -349,10 +342,8 @@ public class CountryStatFragment extends Fragment {
         countryName = getTag();
         if (getTag() != null && getTag().length() > 1) {
             countryName = getTag();
-            mCountryStatBinding.toolbarCountryStat.setVisibility(View.VISIBLE);
         } else {
             countryName = sharedpreferences.getString(Constant.COUNTRY_NAME, "India");
-            mCountryStatBinding.toolbarCountryStat.setVisibility(View.GONE);
         }
         mCountryCode = ISOCodeUtility.getIsoCode(countryName);
 
@@ -366,76 +357,18 @@ public class CountryStatFragment extends Fragment {
         lineChart2 = mCountryStatBinding.lineChart2;
         lineChart3 = mCountryStatBinding.lineChart3;
 
-        mTotalLayout = mCountryStatBinding.chart1;
-        mRecVsDecLayout = mCountryStatBinding.pieChartOverall;
-        mDecLayout = mCountryStatBinding.chart2;
-        mRecLayout = mCountryStatBinding.chart3;
+        mTotalLayout = mCountryStatBinding.llChart1;
+        mRecVsDecLayout = mCountryStatBinding.llPieChartOverall;
+        mDecLayout = mCountryStatBinding.llChart2;
+        mRecLayout = mCountryStatBinding.llChart3;
 
-        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, new ViewCallback() {
-            @Override
-            public void onSuccess(View view, AlertDialog dialog) {
-                LottieAnimationView mLottieAnimationView = view.findViewById(R.id.lottie_loader);
+        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, (view, dialog) -> {
+            LottieAnimationView mLottieAnimationView = view.findViewById(R.id.lottie_loader);
 
-                Random rand = new Random();
-                int ranNum = rand.nextInt(9);
-
-                switch (ranNum) {
-                    case 0:
-                        mLottieAnimationView.setAnimation("corona.json");
-                        break;
-                    case 1:
-                        mLottieAnimationView.setAnimation("punchCorona.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 2:
-                        mLottieAnimationView.setAnimation("docRunning.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 3:
-                        mLottieAnimationView.setAnimation("doctors.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 4:
-                        mLottieAnimationView.setAnimation("hand-sanitizer.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 5:
-                        mLottieAnimationView.setAnimation("staySafe.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 6:
-                        mLottieAnimationView.setAnimation("wash-hand.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 7:
-                        mLottieAnimationView.setAnimation("wfh.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 8:
-                        mLottieAnimationView.setAnimation("mask.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                }
-                    //lottieAnimationView.setAnimation("corona.json");
-
-                    mLottieAnimationView.playAnimation();
-                    mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
-                    mAlertDialog = dialog;
-
-            }
-
-            @Override
-            public void onSuccessBottomSheet(View view, BottomSheetDialog dialog) {
-
-            }
+            mLottieAnimationView.setAnimation("staySafe.json");
+            mLottieAnimationView.playAnimation();
+            mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
+            mAlertDialog = dialog;
 
         });
 

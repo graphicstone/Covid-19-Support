@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
@@ -27,13 +26,10 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
-import com.nullbyte.covid_19support.LoaderDialog;
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.api.GlobalDateWiseAPI;
 import com.nullbyte.covid_19support.api.WorldDataAPI;
-import com.nullbyte.covid_19support.callbacks.ViewCallback;
 import com.nullbyte.covid_19support.databinding.FragmentTrackerBinding;
 import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
 import com.nullbyte.covid_19support.utilities.GraphUtility;
@@ -44,7 +40,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.Random;
 
 public class TrackerFragment extends Fragment {
 
@@ -54,8 +49,6 @@ public class TrackerFragment extends Fragment {
     private ArrayList<String> mCasesListTotal;
     private ArrayList<String> mDeceasedListTotal;
     private ArrayList<String> mRecoveredListTotal;
-    private Long mDeceased, mRecovered;
-    private DialogFragment dialogFragment;
     private AlertDialog mAlertDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,14 +63,11 @@ public class TrackerFragment extends Fragment {
 
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         Fragment prev = getParentFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
+        if (prev != null)
             ft.remove(prev);
-        }
 
         ft.addToBackStack(null);
         mAlertDialog.show();
-//        dialogFragment = new LoaderDialog();
-//        dialogFragment.show(ft, "dialog");
 
         getDateWiseData(mTrackerBinding.getRoot());
         getWorldData(mTrackerBinding.getRoot());
@@ -91,74 +81,13 @@ public class TrackerFragment extends Fragment {
         mDeceasedListTotal = new ArrayList<>();
         mRecoveredListTotal = new ArrayList<>();
 
-        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, new ViewCallback() {
-            @Override
-            public void onSuccess(View view, AlertDialog dialog) {
-                LottieAnimationView mLottieAnimationView = view.findViewById(R.id.lottie_loader);
+        DialogHelperUtility.customDialog(getActivity(), R.layout.loader_layout, (view, dialog) -> {
+            LottieAnimationView mLottieAnimationView = view.findViewById(R.id.lottie_loader);
 
-                Random rand = new Random();
-                int ranNum = rand.nextInt(9);
-
-                switch (ranNum) {
-                    case 0:
-                        mLottieAnimationView.setAnimation("corona.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 1:
-                        mLottieAnimationView.setAnimation("punchCorona.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 2:
-                        mLottieAnimationView.setAnimation("docRunning.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 3:
-                        mLottieAnimationView.setAnimation("doctors.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 4:
-                        mLottieAnimationView.setAnimation("hand-sanitizer.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 5:
-                        mLottieAnimationView.setAnimation("staySafe.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 6:
-                        mLottieAnimationView.setAnimation("wash-hand.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 7:
-                        mLottieAnimationView.setAnimation("wfh.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                    case 8:
-                        mLottieAnimationView.setAnimation("mask.json");
-//                        mLottieAnimationView.playAnimation();
-//                        mLottieAnimationView.loop(true);
-                        break;
-                }
-                //lottieAnimationView.setAnimation("corona.json");
-
-                mLottieAnimationView.playAnimation();
-                mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
-                mAlertDialog = dialog;
-
-            }
-
-            @Override
-            public void onSuccessBottomSheet(View view, BottomSheetDialog dialog) {
-
-            }
-
+            mLottieAnimationView.setAnimation("staySafe.json");
+            mLottieAnimationView.playAnimation();
+            mLottieAnimationView.setRepeatCount(LottieDrawable.INFINITE);
+            mAlertDialog = dialog;
         });
     }
 
@@ -218,8 +147,6 @@ public class TrackerFragment extends Fragment {
                     mTrackerBinding.tvNewDeceased.setText(dataObject.getString("new_deaths"));
                     mTrackerBinding.tvLastUpdatedDateTime.setText(dataObject.getString("statistic_taken_at"));
                     mTrackerBinding.refreshWorldDataLayout.setRefreshing(false);
-                    //mDeceased = Long.valueOf(dataObject.getString("total_deaths"));
-                    //mRecovered = Long.valueOf(dataObject.getString("total_recovered"));;
                     mAlertDialog.dismiss();
 
                     drawGraphs();
@@ -235,17 +162,16 @@ public class TrackerFragment extends Fragment {
 
     private void drawGraphs() {
         drawPie();
-        drawGraphforTotalCases();
+        drawGraphForTotalCases();
         drawGraphForDeath();
         drawGraphForRecovered();
     }
 
     private void drawPie() {
-        mDeceased = Long.valueOf(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
-        mRecovered = Long.valueOf(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
+        long mDeceased = Long.parseLong(mDeceasedListTotal.get(mDeceasedListTotal.size() - 1));
+        long mRecovered = Long.parseLong(mRecoveredListTotal.get(mRecoveredListTotal.size() - 1));
         PieChart mPieChart = mTrackerBinding.piechartoverall;
         ArrayList<PieEntry> sessDataPie1 = new ArrayList<>();
-        Log.i("anant", mDeceased + " " + mRecovered);
         sessDataPie1.add(new PieEntry(mRecovered, "Recovered"));
         sessDataPie1.add(new PieEntry(mDeceased, "Deceased"));
         GraphUtility.piechart(mPieChart, sessDataPie1);
@@ -254,21 +180,21 @@ public class TrackerFragment extends Fragment {
 
     }
 
-    private void drawGraphforTotalCases() {
+    private void drawGraphForTotalCases() {
         LineChart lineChart = mTrackerBinding.lineChart1;
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalCases(), "Total Cases");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary));
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalCases(), "Total Cases");
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary_text));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -289,35 +215,30 @@ public class TrackerFragment extends Fragment {
 
     }
 
-    private ArrayList<Entry> getDataforTotalCases() {
+    private ArrayList<Entry> getDataForTotalCases() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mCasesListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
 
-//        entries.add(new Entry(1f, 10f));
-//        entries.add(new Entry(2f, 20f));
-//        entries.add(new Entry(3f, 40f));
         return entries;
     }
 
     private void drawGraphForDeath() {
         LineChart lineChart = mTrackerBinding.lineChart2;
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalDeath(), "Deceased");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.orange));
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalDeath(), "Deceased");
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.red));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -335,34 +256,31 @@ public class TrackerFragment extends Fragment {
         data.setDrawValues(false);
         lineChart.animateX(2500);
         lineChart.invalidate();
-
     }
 
-    private ArrayList<Entry> getDataforTotalDeath() {
+    private ArrayList<Entry> getDataForTotalDeath() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mDeceasedListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
         return entries;
     }
 
     private void drawGraphForRecovered() {
         LineChart lineChart = mTrackerBinding.lineChart3;
-        LineDataSet lineDataSet = new LineDataSet(getDataforTotalRecovered(), "Recovered");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.blue));
+        LineDataSet lineDataSet = new LineDataSet(getDataForTotalRecovered(), "Recovered");
+        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.green));
         lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         String[] months = new String[mDateListTotal.size()];
         months = mDateListTotal.toArray(months);
-        String[] xAsisValue = months;
+        String[] xAxisValue = months;
 
         ValueFormatter formatter = new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return xAsisValue[(int) value];
+                return xAxisValue[(int) value];
             }
         };
         xAxis.setGranularity(0f);
@@ -380,15 +298,12 @@ public class TrackerFragment extends Fragment {
         data.setDrawValues(false);
         lineChart.animateX(2500);
         lineChart.invalidate();
-
     }
 
-    private ArrayList<Entry> getDataforTotalRecovered() {
+    private ArrayList<Entry> getDataForTotalRecovered() {
         ArrayList<Entry> entries = new ArrayList<>();
-        for (int i = 0; i < mDateListTotal.size(); i++) {
+        for (int i = 0; i < mDateListTotal.size(); i++)
             entries.add(new Entry((float) i, Float.parseFloat(mRecoveredListTotal.get(i))));
-        }
-        Log.i("yaxis", entries.toString());
         return entries;
     }
 }

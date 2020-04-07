@@ -2,6 +2,7 @@ package com.nullbyte.covid_19support.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nullbyte.covid_19support.R;
 import com.nullbyte.covid_19support.models.ContactModel;
-import com.nullbyte.covid_19support.ui.activities.CountryStatActivity;
 
 import java.util.ArrayList;
 
@@ -36,7 +36,11 @@ public class EmergencyNumberAdapter extends RecyclerView.Adapter<EmergencyNumber
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.stateName.setText(stateNumList.get(position).getmStateName());
         holder.contNum.setText(stateNumList.get(position).getmNumber());
-
+        holder.itemView.setOnClickListener(view -> {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+            dialIntent.setData(Uri.parse("tel:" + stateNumList.get(position).getmNumber()));
+            mContext.startActivity(dialIntent);
+        });
     }
 
     @Override

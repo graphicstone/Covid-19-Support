@@ -9,4 +9,9 @@ public class Constant {
     public static final String BASE_URL = "https://coronavirus-monitor.p.rapidapi.com/coronavirus/";
     public static final String PREFERENCES = "Preferences";
     public static final String COUNTRY_NAME = "CountryName";
+    public static final String HARISHIV_GITHUB_URL = "https://github.com/graphicstone";
+    public static final String ANANT_GITHUB_URL = "https://github.com/Anant-Raman";
+    public static final String HARISHIV_LINKEDIN_URL = "https://www.linkedin.com/in/harishiv-singh/";
+    public static final String ANANT_LINKEDIN_URL = "https://www.linkedin.com/in/anantramanindia/";
+    public static final String PROJECT_GITHUB_REPO = "https://github.com/graphicstone/Covid-19-Support";
 }

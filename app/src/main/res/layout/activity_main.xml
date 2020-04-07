@@ -10,9 +10,9 @@
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/accent"
+        android:background="@color/white"
         android:gravity="center"
-        android:visibility="gone"
+        app:menu="@menu/main"
         app:contentInsetStart="@dimen/dp_0">
 
         <TextView
@@ -20,51 +20,52 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:gravity="center"
+            android:visibility="gone"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_20" />
 
+        <RadioGroup
+            android:id="@+id/rg_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/radio_outline"
+            android:checkedButton="@+id/rb_world"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_world"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/world"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/rb_my_country"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/my_country"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
     </androidx.appcompat.widget.Toolbar>
-
-    <RadioGroup
-        android:id="@+id/rg_toggle"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/radio_outline"
-        android:checkedButton="@+id/rb_world"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_world"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_widget_background"
-            android:button="@null"
-            android:gravity="center"
-            android:text="@string/world"
-            android:textColor="@color/white" />
-
-        <RadioButton
-            android:id="@+id/rb_my_country"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:layout_weight="1"
-            android:background="@drawable/toggle_widget_background"
-            android:button="@null"
-            android:gravity="center"
-            android:text="@string/my_country"
-            android:textColor="@color/white" />
-    </RadioGroup>
 
     <FrameLayout
         android:id="@+id/main_container"
@@ -77,9 +78,10 @@
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:backgroundTint="@color/primary"
+            app:tint="@color/white"
             app:srcCompat="@drawable/ic_phone_white_24dp" />
 
 

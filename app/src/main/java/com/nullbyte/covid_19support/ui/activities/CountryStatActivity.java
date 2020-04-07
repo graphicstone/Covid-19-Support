@@ -1,6 +1,8 @@
 package com.nullbyte.covid_19support.ui.activities;
 
 import android.os.Bundle;
+import android.view.WindowManager;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +20,12 @@ public class CountryStatActivity extends AppCompatActivity {
 
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Toolbar mToolbar = findViewById(R.id.toolbar_country_stat);
+        mToolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         String countryName = getIntent().getStringExtra("Country");
         FragmentManager fragmentManager = getSupportFragmentManager();
