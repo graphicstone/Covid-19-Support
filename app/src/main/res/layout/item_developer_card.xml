@@ -26,10 +26,23 @@
             android:text="@string/harishiv_singh"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/sp_20"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_email"
             app:layout_constraintEnd_toStartOf="@id/civ_github"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:text="@string/email"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_developer_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/civ_github" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_github"

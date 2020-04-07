@@ -71,4 +71,5 @@
     <string name="number">Number</string>
     <string name="state">State</string>
     <string name="splash">Splash</string>
+    <string name="email">Email</string>
 </resources>

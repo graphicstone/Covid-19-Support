@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CreditsActivity extends AppCompatActivity {
 
     private RecyclerView mDeveloperRecyclerView, mSpecialCreditsRecyclerView;
-    private ArrayList<String> mName, mCreditsName, mCreditsFor;
+    private ArrayList<String> mName, mCreditsName, mCreditsFor, mEmail;
     private Toolbar mToolbar;
     private TextView mGithubRepo;
 
@@ -46,7 +46,7 @@ public class CreditsActivity extends AppCompatActivity {
         });
 
         mDeveloperRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mDeveloperRecyclerView.setAdapter(new DeveloperInfoAdapter(mName));
+        mDeveloperRecyclerView.setAdapter(new DeveloperInfoAdapter(mName, mEmail));
 
         mSpecialCreditsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mSpecialCreditsRecyclerView.setAdapter(new SpecialCreditsAdapter(mCreditsName, mCreditsFor));
@@ -55,6 +55,9 @@ public class CreditsActivity extends AppCompatActivity {
     private void initList() {
         mName.add("Harishiv Singh");
         mName.add("Anant Raman");
+
+        mEmail.add("harishiv8@gmail.com");
+        mEmail.add("anantraman.india@gmail.com");
 
         mCreditsName.add("astsiatsko (RapidAPI)");
         mCreditsName.add("Saiprasad Balasubramanian");
@@ -75,6 +78,7 @@ public class CreditsActivity extends AppCompatActivity {
         mName = new ArrayList<>();
         mCreditsName = new ArrayList<>();
         mCreditsFor = new ArrayList<>();
+        mEmail = new ArrayList<>();
         mGithubRepo = findViewById(R.id.tv_github_repo);
         mToolbar = findViewById(R.id.toolbar_credits);
         mDeveloperRecyclerView = findViewById(R.id.rv_developer_info);

@@ -20,11 +20,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DeveloperInfoAdapter extends RecyclerView.Adapter<DeveloperInfoAdapter.ViewHolder> {
 
-    private ArrayList<String> mName;
+    private ArrayList<String> mName, mEmail;
     private Context mContext;
 
-    public DeveloperInfoAdapter(ArrayList<String> mName) {
+    public DeveloperInfoAdapter(ArrayList<String> mName, ArrayList<String> mEmail) {
         this.mName = mName;
+        this.mEmail = mEmail;
     }
 
     @NonNull
@@ -37,6 +38,7 @@ public class DeveloperInfoAdapter extends RecyclerView.Adapter<DeveloperInfoAdap
     @Override
     public void onBindViewHolder(@NonNull DeveloperInfoAdapter.ViewHolder holder, int position) {
         holder.name.setText(mName.get(position));
+        holder.email.setText(mEmail.get(position));
         holder.github.setOnClickListener(view -> {
             if (mName.get(position).equals("Harishiv Singh")) {
                 Intent intent = new Intent(mContext, WebActivity.class);
@@ -68,13 +70,14 @@ public class DeveloperInfoAdapter extends RecyclerView.Adapter<DeveloperInfoAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name;
+        TextView name, email;
         CircleImageView github, linkedIn;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.tv_developer_name);
+            email = itemView.findViewById(R.id.tv_email);
             github = itemView.findViewById(R.id.civ_github);
             linkedIn = itemView.findViewById(R.id.civ_linkedIn);
         }
