@@ -45,7 +45,7 @@ public class ISOCodeUtility {
         countryCodes.put("Bouvet Island", "BVT");
         countryCodes.put("Brazil", "BRA");
         countryCodes.put("British Indian Ocean Territory", "IOT");
-        countryCodes.put("Brunei Darussalam", "BRN");
+        countryCodes.put("Brunei", "BRN");
         countryCodes.put("Bulgaria", "BGR");
         countryCodes.put("Burkina Faso", "BFA");
         countryCodes.put("Burundi", "BDI");
@@ -64,7 +64,6 @@ public class ISOCodeUtility {
         countryCodes.put("Cocos (Keeling) Islands (the)", "");
         countryCodes.put("Colombia", "COL");
         countryCodes.put("Comoros", "COM");
-        countryCodes.put("Congo", "COD");
         countryCodes.put("Congo (the)", "COG");
         countryCodes.put("Cook Islands", "COK");
         countryCodes.put("Costa Rica", "CRI");
@@ -77,6 +76,7 @@ public class ISOCodeUtility {
 
 
         countryCodes.put("Denmark", "DNK");
+        countryCodes.put("DRC", "COD");
         countryCodes.put("Djibouti", "DJI");
         countryCodes.put("Dominica", "DMA");
         countryCodes.put("Dominican Republic", "DOM");
@@ -93,7 +93,7 @@ public class ISOCodeUtility {
 
 
         countryCodes.put("Falkland Islands", "FLK");
-        countryCodes.put("Faroe Islands", "FRO");
+        countryCodes.put("Faeroe Islands", "FRO");
         countryCodes.put("Fiji", "FJI");
         countryCodes.put("Finland", "FIN");
         countryCodes.put("France", "FRA");
@@ -227,13 +227,13 @@ public class ISOCodeUtility {
         countryCodes.put("Réunion", "REU");
 
 
-        countryCodes.put("Saint Barthélemy", "BLM");
+        countryCodes.put("St. Barth", "BLM");
         countryCodes.put("Saint Helena", "SHN");
         countryCodes.put("Saint Kitts and Nevis", "KNA");
         countryCodes.put("Saint Lucia", "LCA");
         countryCodes.put("Saint Martin", "MAF");
-        countryCodes.put("Saint Pierre and Miquelon", "SPM");
-        countryCodes.put("Saint Vincent and the Grenadines", "VCT");
+        countryCodes.put("Saint Pierre Miquelon", "SPM");
+        countryCodes.put("St. Vincent Grenadines", "VCT");
         countryCodes.put("Samoa", "WSM");
         countryCodes.put("San Marino", "SMR");
         countryCodes.put("Sao Tome and Principe", "STP");
@@ -258,7 +258,8 @@ public class ISOCodeUtility {
         countryCodes.put("Svalbard and Jan Mayen", "SJM");
         countryCodes.put("Sweden", "SWE");
         countryCodes.put("Switzerland", "CHE");
-        countryCodes.put("Syrian Arab Republic", "SYR");
+        countryCodes.put("Syria", "SYR");
+
 
 
         countryCodes.put("Taiwan", "TWN");
@@ -273,13 +274,13 @@ public class ISOCodeUtility {
         countryCodes.put("Tunisia", "TUN");
         countryCodes.put("Turkey", "TUR");
         countryCodes.put("Turkmenistan", "TKM");
-        countryCodes.put("Turks and Caicos Islands", "TCA");
+        countryCodes.put("Turks and Caicos", "TCA");
         countryCodes.put("Tuvalu", "TUV");
 
 
         countryCodes.put("Uganda", "UGA");
         countryCodes.put("Ukraine", "UKR");
-        countryCodes.put("United Arab Emirates", "ARE");
+        countryCodes.put("UAE", "ARE");
         countryCodes.put("UK", "GBR");
         countryCodes.put("United States Minor Outlying Islands", "UMI");
         countryCodes.put("USA", "USA");
@@ -289,7 +290,7 @@ public class ISOCodeUtility {
 
         countryCodes.put("Vanuatu", "VUT");
         countryCodes.put("Venezuela", "VEN");
-        countryCodes.put("Viet Nam", "VNM");
+        countryCodes.put("Vietnam", "VNM");
         countryCodes.put("Virgin Islands", "VGB");
         countryCodes.put("Virgin Islands(U.S)", "VIR");
 
