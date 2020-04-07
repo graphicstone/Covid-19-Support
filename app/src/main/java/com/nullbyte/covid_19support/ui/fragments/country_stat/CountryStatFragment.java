@@ -86,12 +86,12 @@ public class CountryStatFragment extends Fragment {
         ft.addToBackStack(null);
         mAlertDialog.show();
 
-        if (!mCountryCode.equals("NA")) {
-            getCountryDateWiseData();
-        } else {
-            mAlertDialog.dismiss();
-            showGraph = false;
-        }
+//        if (!mCountryCode.equals("NA")) {
+//            getCountryDateWiseData();
+//        } else {
+//            mAlertDialog.dismiss();
+//            showGraph = false;
+        getCountryDateWiseData();
         return mCountryStatBinding.getRoot();
     }
 
@@ -176,6 +176,7 @@ public class CountryStatFragment extends Fragment {
                     showGraph = false;
                     e.printStackTrace();
                 }
+
 
                 if (!showGraph) {
                     hideGraphs();
@@ -373,6 +374,4 @@ public class CountryStatFragment extends Fragment {
         });
 
     }
-
-
 }
