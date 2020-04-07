@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     mTitleBar.setText(R.string.search_by_country);
                     mRadioGroup.setVisibility(View.GONE);
                     mTitleBar.setVisibility(View.VISIBLE);
+                    mTitleBar.setBackgroundColor(getResources().getColor(R.color.accent));
                     mToolbar.setBackgroundColor(getResources().getColor(R.color.accent));
                     active = searchFragment;
                     break;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     mTitleBar.setText(R.string.info);
                     mRadioGroup.setVisibility(View.GONE);
                     mTitleBar.setVisibility(View.VISIBLE);
+                    mTitleBar.setBackgroundColor(getResources().getColor(R.color.accent));
                     mToolbar.setBackgroundColor(getResources().getColor(R.color.accent));
                     active = infoFragment;
                     break;
@@ -195,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     mTitleBar.setText(R.string.latest_update);
                     mRadioGroup.setVisibility(View.GONE);
                     mTitleBar.setVisibility(View.VISIBLE);
+                    mTitleBar.setBackgroundColor(getResources().getColor(R.color.accent));
                     mToolbar.setBackgroundColor(getResources().getColor(R.color.accent));
                     active = updatesFragment;
                     break;
