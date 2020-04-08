@@ -6,6 +6,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.nullbyte.covid_19support.adapters.CountryListAdapter;
 import com.nullbyte.covid_19support.adapters.EmergencyNumberAdapter;
 import com.nullbyte.covid_19support.api.CasesByCountryAPI;
 import com.nullbyte.covid_19support.databinding.FragmentSearchBinding;
+import com.nullbyte.covid_19support.utilities.DialogHelperUtility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,7 +81,13 @@ public class SearchFragment extends Fragment implements TextWatcher {
                         break;
                     }
                 }
-                data = data.substring(splitPoint, data.length() - 1);
+                if(data.length() > 2) {
+                    data = data.substring(splitPoint, data.length() - 1);
+                } else {
+                    Snackbar snackbar = Snackbar.make(view, "Cannot fetch data from the server", Snackbar.LENGTH_LONG);
+                    snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
+                    snackbar.show();
+                }
                 try {
                     JSONArray jsonArr = new JSONArray(data);
                     for (int i = 0; i < data.length(); ++i) {

@@ -107,7 +107,13 @@ public class TrackerFragment extends Fragment {
                         break;
                     }
                 }
-                data = data.substring(splitPoint, data.length() - 1);
+                if(data.length() > 2) {
+                    data = data.substring(splitPoint, data.length() - 1);
+                } else {
+                    Snackbar snackbar = Snackbar.make(view, "Cannot fetch data from the server", Snackbar.LENGTH_LONG);
+                    snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
+                    snackbar.show();
+                }
                 try {
                     JSONObject response = new JSONObject(data);
                     Iterator<String> keys = response.keys();
@@ -183,8 +189,10 @@ public class TrackerFragment extends Fragment {
     private void drawGraphForTotalCases() {
         LineChart lineChart = mTrackerBinding.lineChart1;
         LineDataSet lineDataSet = new LineDataSet(getDataForTotalCases(), "Total Cases");
-        lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary_text));
-        lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
+        if(isAdded()) {
+            lineDataSet.setColor(ContextCompat.getColor(requireActivity(), R.color.primary_text));
+            lineDataSet.setValueTextColor(ContextCompat.getColor(requireActivity(), R.color.design_default_color_primary_dark));
+        }
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         String[] months = new String[mDateListTotal.size()];

@@ -108,8 +108,13 @@ public class CountryStatFragment extends Fragment {
                     if (data.charAt(i) == '[')
                         splitPoint = i;
                 }
-                if (splitPoint > 0)
+                if (splitPoint > 0) {
                     data = data.substring(splitPoint, data.length() - 1);
+                } else {
+                    Snackbar snackbar = Snackbar.make(mCountryStatBinding.getRoot(), "Cannot fetch data from the server", Snackbar.LENGTH_LONG);
+                    snackbar.getView().setBackgroundTintList(ContextCompat.getColorStateList(Objects.requireNonNull(getActivity()), R.color.red));
+                    snackbar.show();
+                }
                 try {
                     JSONArray jsonArr = new JSONArray(data);
                     for (int i = 0; i < data.length(); ++i) {
@@ -146,6 +151,7 @@ public class CountryStatFragment extends Fragment {
                         break;
                     }
                 }
+                if(data.length() > 2)
                 data = data.substring(splitPoint, data.length() - 1);
                 try {
                     Log.i("DataTry", data);
